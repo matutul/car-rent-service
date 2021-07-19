@@ -1,0 +1,13 @@
+.bottom{
+    background-color: rgb(35, 38, 39);
+}
+.social-icon{
+    transition: .2s;
+}
+.social-icon:hover {
+    transform: translateY(-5px);
+    box-shadow: 1px 2px 10px rgb(82, 82, 82);
+}
+.service-link{
+    
+}

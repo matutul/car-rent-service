@@ -1,0 +1,18 @@
+.form{
+    background-color: #FDB531;
+}
+.form input{
+    margin: 10px;
+    padding: 3px 15px;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    border: 1px solid gray;
+}
+.form input:focus{
+    outline: none;
+
+}
+.submit-btn{
+    border: none;
+    outline: none;
+}

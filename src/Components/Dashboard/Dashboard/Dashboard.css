@@ -1,0 +1,11 @@
+.side-bar{
+    background-color: rgb(57, 165, 89);
+    height: 100%;
+}
+.side-bar-link{
+    transition: .3s;
+}
+.side-bar-link:hover{
+    color: rgb(78, 78, 78);
+    transform: translateX(-5px);
+}

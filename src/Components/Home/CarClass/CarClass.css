@@ -1,0 +1,20 @@
+.car-class{
+    cursor: default;
+    transition: .3s;
+}
+.car-class h3{
+    transition: .4s;
+}
+.price{
+    transition: .4s;
+}
+.car-class:hover h3{
+    color: #FDB531;
+}
+.car-class:hover .price{
+    transform: scale(1.4);
+}
+.car-class:hover{
+    box-shadow: 3px 4px 25px gray;
+    transform: translateY(-5px);
+}
