@@ -15,16 +15,13 @@ import { createContext } from 'react';
 import { useState } from 'react';
 import Login from './Components/LoginSystem/Login/Login';
 import Signup from './Components/LoginSystem/Signup/Signup';
+import PrivateRoute from './Components/LoginSystem/PrivateRoute/PrivateRoute';
 
 export const UserContext = createContext();
 
 function App() {
 
-  const [loggedinUser, setLoggedinUser] = useState({
-    displayName: 'Ashrafujjaman Tutul',
-    email: 'ashrafujjamantutul@gmail.com',
-    phoneNumber: '01941071009'
-  })
+  const [loggedinUser, setLoggedinUser] = useState({});
 
   return (
     <UserContext.Provider value={[loggedinUser, setLoggedinUser]}>
@@ -39,9 +36,9 @@ function App() {
           <Route path='/book'>
             <BookRide></BookRide>
           </Route>
-          <Route path='/dashboard'>
+          <PrivateRoute path='/dashboard'>
             <Dashboard></Dashboard>
-          </Route>
+          </PrivateRoute>
           <Route path='/about'>
             <AboutUs></AboutUs>
           </Route>

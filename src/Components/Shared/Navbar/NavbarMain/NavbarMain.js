@@ -1,15 +1,24 @@
 import React from 'react';
 import { useHistory } from "react-router-dom";
-import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown, Button } from 'react-bootstrap';
 import './NavbarMain.css';
+import { useContext } from 'react';
+import { UserContext } from '../../../../App';
 
 const NavbarMain = () => {
 
+    const [loggedInUser, setLoggedInUser] = useContext(UserContext);
     const history = useHistory();
     const routeToPath = path => {
         history.push(path);
     }
 
+    const handleSignOut = () => {
+        setLoggedInUser({});
+    }
+    const handleLogIn = () => {
+        history.push('/login');
+    }
     return (
         <Navbar className="nav-bar" collapseOnSelect expand="lg" bg="dark" variant="dark">
             <div className="container">
@@ -24,13 +33,14 @@ const NavbarMain = () => {
                         <Nav.Link onClick={() => routeToPath('/contact')}>Contact</Nav.Link>
                     </Nav>
                     <Nav>
-                        <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-                            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-                        </NavDropdown>
+                        {
+                            loggedInUser.displayName ? (<NavDropdown title={loggedInUser.displayName} id="collasible-nav-dropdown" className="link">
+                                <NavDropdown.Item to="/profile">Profile</NavDropdown.Item>
+                                <NavDropdown.Divider />
+                                <NavDropdown.Item onClick={handleSignOut}>Log out</NavDropdown.Item>
+                            </NavDropdown>) : (<><Button onClick={() => routeToPath('/login')} className="menu-btn mx-2" variant="outline-light">Log in</Button>
+                            <Button onClick={() => routeToPath('/signup')} className="menu-btn mx-2" variant="light">Sign up</Button></>)
+                        }
                     </Nav>
                 </Navbar.Collapse>
             </div>

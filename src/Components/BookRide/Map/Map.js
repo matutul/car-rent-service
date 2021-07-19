@@ -7,7 +7,9 @@ import { bookingContext } from '../BookRide/BookRide';
 
 const containerStyle = {
     width: '100%',
-    height: '400px'
+    height: '400px',
+    borderRadius: '10px',
+    border: "2px solid darkgray"
 };
 
 const center = {
@@ -39,9 +41,10 @@ const Map = () => {
                 mapContainerStyle={containerStyle}
                 center={center}
                 zoom={7}
+                className="map"
             >
                 {
-                    (directionResponse == null) && (
+                    (directionResponse == null) && (bookingInfo.start && bookingInfo.end) && (
                         <DirectionsService
                             // required
                             options={{
@@ -61,7 +64,7 @@ const Map = () => {
 
 
                 {
-                    (distanceResponse == null) && (
+                    (distanceResponse == null) && (bookingInfo.start && bookingInfo.end) && (
                         <DistanceMatrixService
                             options={{
                                 destinations: [bookingInfo?.end],

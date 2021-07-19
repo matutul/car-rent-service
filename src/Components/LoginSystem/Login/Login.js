@@ -7,12 +7,33 @@ import { useForm } from "react-hook-form";
 import { Button } from 'react-bootstrap';
 import facebook from '../../../icons/facebookRound.svg';
 import google from '../../../icons/google.svg';
-import { Link } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
+import { signInWithEmailAndPassword } from '../Firebase/FirebaseFunction';
+import { useContext } from 'react';
+import { UserContext } from '../../../App';
 
 const Login = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors }, reset, setFocus } = useForm();
+    const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+    const location = useLocation();
+    const history = useHistory()
+    const { from } = location.state || { from: { pathname: "/" } };
 
-    const onSubmit = data => console.log(data);
+
+    const onSubmit = data => {
+        signInWithEmailAndPassword(data)
+            .then(signinResponse => {
+                if (signinResponse.message) {
+                    alert(signinResponse.message);
+                    reset();
+                    setFocus('email');
+                }
+                if (signinResponse.displayName) {
+                    setLoggedInUser(signinResponse);
+                    history.replace(from);
+                }
+            })
+    };
     const handleForgetPassword = () => {
 
     }
@@ -26,8 +47,15 @@ const Login = () => {
 
                             <h3 className="text-center mb-5">Log in Form</h3>
 
-                            <input label="Email" className="form-control my-2" {...register("email", { required: true })} placeholder="Your email" />
-                            {errors.email && <p>This field is required</p>}
+                            <input label="Email" className="form-control my-2" {...register("email", {
+                                required: "You must specify an email",
+                                pattern: {
+                                    value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                                    message: "This is not a valid email address."
+                                }
+                            })} placeholder="Your email" />
+                            {errors.email && <p>{errors.email.message}</p>}
+
 
                             <input className="form-control my-2" type="password" {...register("password", { required: true })} placeholder="Password" />
                             {errors.password && <p>This field is required</p>}
@@ -39,12 +67,12 @@ const Login = () => {
                             <p className="row d-flex align-items-center"> <hr className="col-4" />OR<hr className="col-4" /> </p>
 
 
-                            <Button variant="outline-secondary" className="d-flex align-items-center my-2 secondary-login border">
+                            <Button variant="outline-secondary" className="d-flex align-items-center my-2 secondary-login border" disabled>
                                 <img className="secondary-login-icon" src={google} alt="" />
                                 <p className="text-center w-100 m-0">Continue with Google</p>
                             </Button>
 
-                            <Button variant="outline-primary" className="d-flex align-items-center my-2 secondary-login border">
+                            <Button variant="outline-primary" className="d-flex align-items-center my-2 secondary-login border" disabled>
                                 <img className="secondary-login-icon" src={facebook} alt="" />
                                 <p className="text-center w-100 m-0">Continue with Facebook</p>
                             </Button>

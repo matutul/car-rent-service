@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Footer from '../../Shared/Footer/Footer';
 import Navbar from '../../Shared/Navbar/Navbar/Navbar';
 import './Dashboard.css';
@@ -9,9 +9,11 @@ import CompletedOrders from '../CompletedOrders/CompletedOrders';
 import ActiveOrders from '../ActiveOrders/ActiveOrders';
 import AddCar from '../AddCar/AddCar';
 import Cars from '../Cars/Cars';
+import { UserContext } from '../../../App';
 
 const Dashboard = () => {
     const [page, setPage] = useState(null);
+    const [loggedInUser, setLoggedInUser] = useContext(UserContext);
     const displaySection = pageName => {
         setPage(pageName);
     }
@@ -20,7 +22,7 @@ const Dashboard = () => {
         <div>
             <Navbar></Navbar>
             <div className="row w-100">
-                <div className="col-md-2 side-bar">
+                <div className="col-md-3 side-bar">
                     <Nav className="flex-column  p-5 w-100">
                         <Nav.Link className="w-100 px-1 py-3 side-bar-link" onClick={() => displaySection('completedOrder')}><FontAwesomeIcon className="mr-1" icon={faBorderAll} /> Completed orders</Nav.Link>
                         <Nav.Link className="w-100 px-1 py-3 side-bar-link" onClick={() => displaySection('activeOrder')}><FontAwesomeIcon className="mr-1" icon={faThList} /> Active orders</Nav.Link>
@@ -28,10 +30,10 @@ const Dashboard = () => {
                         <Nav.Link className="w-100 px-1 py-3 side-bar-link" onClick={() => displaySection('addCar')}><FontAwesomeIcon className="mr-1" icon={faPlusSquare} /> Add Car</Nav.Link>
                         <Nav.Link className="w-100 px-1 py-3 side-bar-link" onClick={() => displaySection('admin')}><FontAwesomeIcon className="mr-1" icon={faUserCog} /> Admins</Nav.Link>
                         <Nav.Link className="w-100 px-1 py-3 side-bar-link" onClick={() => displaySection('addAdmin')}><FontAwesomeIcon className="mr-1" icon={faUserPlus} /> Add Admin</Nav.Link>
-                        <Nav.Link className="w-100 px-1 py-3 side-bar-link"><FontAwesomeIcon className="mr-1" icon={faSignOutAlt} /> Log out</Nav.Link>
+                        <Nav.Link className="w-100 px-1 py-3 side-bar-link" onClick={() => setLoggedInUser({})}><FontAwesomeIcon className="mr-1" icon={faSignOutAlt} /> Log out</Nav.Link>
                     </Nav>
                 </div>
-                <div className="col-md-6 p-5 border">
+                <div className="col-md-6 p-3 border">
                     {
                         (page === 'completedOrder') && <CompletedOrders></CompletedOrders>
                     }

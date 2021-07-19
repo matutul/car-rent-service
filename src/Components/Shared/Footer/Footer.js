@@ -10,7 +10,7 @@ import { faEnvelope, faMapMarkerAlt, faMobileAlt } from '@fortawesome/free-solid
 
 const Footer = () => {
     return (
-        <div className="mt-5">
+        <div>
             <div className="upper bg-dark p-5">
                 <div className="container">
                     <div className="row">
