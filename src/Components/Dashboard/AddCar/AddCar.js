@@ -10,7 +10,7 @@ const AddCar = () => {
     const onSubmit = data => {
         data.photo = carPhotoUrl;
 
-        fetch('http://localhost:4000/addCar', {
+        fetch('https://rocky-waters-70556.herokuapp.com/addCar', {
             method: "POST",
             headers: { 'content-type': 'application/json' },
             body: JSON.stringify(data)

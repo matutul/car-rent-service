@@ -31,7 +31,7 @@ const BookRide = () => {
     }, [])
 
     useEffect(() => {
-        fetch('http://localhost:4000/cars')
+        fetch('https://rocky-waters-70556.herokuapp.com/cars')
             .then(res => res.json())
             .then(data => setCars(data))
     }, [])
