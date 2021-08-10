@@ -36,9 +36,15 @@ function App() {
           <Route path='/book'>
             <BookRide></BookRide>
           </Route>
+
+          <PrivateRoute path='/dashboard/:pageName'>
+            <Dashboard />
+          </PrivateRoute>
           <PrivateRoute path='/dashboard'>
             <Dashboard></Dashboard>
           </PrivateRoute>
+
+
           <Route path='/about'>
             <AboutUs></AboutUs>
           </Route>

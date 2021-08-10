@@ -36,56 +36,71 @@ const AddCar = () => {
         })
             .then(res => res.json())
             .then(data => {
-                const photoUrl = data?.data?.display_url;
+                const photoUrl = data?.data?.display_url || "";
                 setCarPhotoUrl(photoUrl);
             })
     }
 
+    console.log(carPhotoUrl);
+
     return (
         <div>
             <h3>Add New Car:</h3>
-            <form className="border p-4 rounded" onSubmit={handleSubmit(onSubmit)}>
+            <form className="border p-4 rounded mt-3 shadow" onSubmit={handleSubmit(onSubmit)}>
                 {/* register your input into the hook by invoking the "register" function */}
                 <div className="row">
                     <div className="col-md-6">
-                        <input className="w-100 my-2 py-1 px-3" placeholder="Car name" {...register("carName", { required: true })} />
-                        {errors.carName && <p>This is field is required</p>}
+                        <input className="w-100 my-2 py-1 px-3 form-control" placeholder="Car name" {...register("carName", { required: "Specify a car name" })} />
+                        {errors.carName && <p className="text-warning w-100">{errors.carName.message}</p>}
                     </div>
                     <div className="col-md-6">
-                        <input className="w-100 my-2 py-1 px-3" placeholder="Model name" {...register("modelName", { required: true })} />
-                        {errors.modelName && <p>This is field is required</p>}
+                        <input className="w-100 my-2 py-1 px-3 form-control" placeholder="Model name" {...register("modelName", { required: "Specify model name" })} />
+                        {errors.modelName && <p className="text-warning">{errors.modelName.message}</p>}
                     </div>
                     <div className="col-md-6">
-                        <input className="w-100 my-2 py-1 px-3" placeholder="Model year" {...register("modelYear", { required: true })} />
-                        {errors.modelYear && <p>This is field is required</p>}
+                        <input className="w-100 my-2 py-1 px-3 form-control" placeholder="Model year" {...register("modelYear", { required: "Specify model year" })} />
+                        {errors.modelYear && <p className="text-warning">{errors.modelYear.message}</p>}
                     </div>
 
                     {/* include validation with required or other standard HTML validation rules */}
                     <div className="col-md-6">
-                        <input className="w-100 my-2 py-1 px-3" placeholder="Register number" {...register("number", { required: true })} />
-                        {errors.number && <p>This is field is required</p>}
+                        <input className="w-100 my-2 py-1 px-3 form-control" placeholder="Register number" {...register("number", { required: "Specify car registration number" })} />
+                        {errors.number && <p className="text-warning">{errors.number.message}</p>}
                     </div>
                     <div className="col-md-6">
-                        <input className="w-100 my-2 py-1 px-3" placeholder="Mileage" {...register("mileage", { required: true })} />
-                        {errors.mileage && <p>This is field is required</p>}
+                        <input type="number" className="w-100 my-2 py-1 px-3 form-control" placeholder="Mileage" {...register("mileage", { required: "Specify car mileage" })} />
+                        {errors.mileage && <p className="text-warning">{errors.mileage.message}</p>}
                     </div>
                     <div className="col-md-6">
-                        <input type="number" className="w-100 my-2 py-1 px-3" placeholder="Passenger seat" {...register("seat", { min: 2, max: 20 }, { required: true })} />
-                        {errors.seat && <p>This is field is required{errors.seat.message}</p>}
+                        <input type="number" className="w-100 my-2 py-1 px-3 form-control" placeholder="Passenger seat" {...register("seat",
+                            { required: "Specify quantity of passenger seat" },
+                            {
+                                min: 2,
+                                max: 20
+                            }
+                            )} />
+                        {errors.seat && <p className="text-warning">{errors.seat.message || "Select a value from 2 to 20"}</p>}
                     </div>
-
                     <div className="col-md-6">
-                        <input className="w-100 my-2 py-1" type="file" {...register("photo", { required: true })} onChange={(event) => handleImageUpload(event)} />
-                        {errors.photo && <p>This is field is required</p>}
+                        <input type="number" className="w-100 my-2 py-1 px-3 form-control" placeholder="Rent per day" {...register("rent",
+                            { required: "Specify car rent per day" }, 
+                            { min: 0 }
+                        )} />
+                        {errors.rent && <p className="text-warning">{errors.rent.message || "Select a positive value"}</p>}
                     </div>
                     <div className="col-md-6">
-                        <input type="number" className="w-100 my-2 py-1 px-3" placeholder="Price per kilo." {...register("price", { min: 2 }, { required: true })} />
-                        {errors.seat && <p>This is field is required{errors.seat.message}</p>}
+                        <input type="number" className="w-100 my-2 py-1 px-3 form-control" placeholder="Price per kilometer" {...register("price",
+                            { required: "Specify price per kilometer" },
+                            { min: 0 }
+                        )} />
+                        {errors.price && <p className="text-warning">{errors.price.message || "Select a positive value"}</p>}
+                    </div>
+                    <div className="col-md-6">
+                        <input className="w-100 my-2 py-1 form-control" type="file" {...register("photo", { required: "Upload a car image" })} onChange={(event) => handleImageUpload(event)} />
+                        {errors.photo && <p className="text-warning">{errors.photo.message}</p>}
                     </div>
                 </div>
-                {
-                    carPhotoUrl && (<input className="my-2 px-5 btn btn-warning" type="submit" />)
-                }
+                <input className="my-2 px-5 btn btn-warning" type="submit" disabled={carPhotoUrl.length > 0 ? false : true} />
 
             </form>
 

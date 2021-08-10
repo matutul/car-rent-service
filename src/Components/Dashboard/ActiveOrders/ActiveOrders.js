@@ -6,7 +6,7 @@ const ActiveOrders = () => {
     return (
         <div>
             <h3>Active Orders:</h3>
-            <Table striped bordered hover>
+            <Table striped bordered hover className="mt-3 shadow">
                 <thead>
                     <tr>
                         <th>#</th>

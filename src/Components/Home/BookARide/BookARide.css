@@ -6,13 +6,28 @@
     padding: 3px 15px;
     font-size: 1.2rem;
     border-radius: 5px;
-    border: 1px solid gray;
+    /* border: 1px solid gray; */
+    border: none;
 }
-.form input:focus{
+/* .form input:focus{
     outline: none;
-
+} */
+.errorMessage{
+    text-align: left;
+    color: #CD113B;
+    margin-left: 10px;
 }
 .submit-btn{
     border: none;
     outline: none;
+}
+.bookARideSubmitBtn{
+    background-color: #FF7600 !important;
+    color: #ffffff !important;
+    border: none !important;
+    outline: none !important;
+    transition: .3s;
+}
+.bookARideSubmitBtn:hover{
+    background-color: #ff8114 !important;
 }

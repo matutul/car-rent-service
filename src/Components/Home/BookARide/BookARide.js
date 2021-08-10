@@ -6,7 +6,7 @@ import { useContext } from 'react';
 import { UserContext } from '../../../App';
 
 const BookARide = () => {
-    
+
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [loggedinUser, setLoggedinUser] = useContext(UserContext);
 
@@ -23,17 +23,34 @@ const BookARide = () => {
             <form className="form border rounded p-5" onSubmit={handleSubmit(onSubmit)}>
                 {/* register your input into the hook by invoking the "register" function */}
                 {/* include validation with required or other standard HTML validation rules */}
-                <input placeholder="Start Destination" {...register("start", { required: true })} />
+                <div className="row">
+                    <div className="col-md-6 col-lg-3">
+                        <input className="form-control" placeholder="Pick up location" {...register("start", { required: "Specify a pick up location" })} />
+                        {errors.start && <p className="errorMessage">{errors.start.message}</p>}
+                    </div>
 
-                {errors.start && <span>This field is required</span>}
-                <input placeholder="End Destination" {...register("end", { required: true })} />
-                {/* errors will return when field validation fails  */}
-                {errors.end && <span>This field is required</span>}
-                <input placeholder="Phone Number" {...register("phone", { required: true })} />
-                {/* errors will return when field validation fails  */}
-                {errors.phone && <span>This field is required</span>}
+                    <div className="col-md-6 col-lg-3">
+                        <input className="form-control" placeholder="Drop off location" {...register("end", { required: "Specify a drop off location" })} />
+                        {/* errors will return when field validation fails  */}
+                        {errors.end && <p className="errorMessage">{errors.end.message}</p>}
+                    </div>
 
-                <input className="btn btn-danger my-0 submit-btn" type="submit" value="Book A Ride" />
+                    <div className="col-md-6 col-lg-3">
+                        <input className="form-control" placeholder="Phone Number" {...register("phone", { required: "Specify a phone number" })} />
+                        {/* errors will return when field validation fails  */}
+                        {errors.phone && <p className="errorMessage">{errors.phone.message}</p>}
+                    </div>
+                    <div className="col-md-6 col-lg-3">
+                        <input className="form-control btn bookARideSubmitBtn" type="submit" value="Book A Ride" />
+                    </div>
+                </div>
+
+
+
+
+
+
+
             </form>
         </div>
     );
