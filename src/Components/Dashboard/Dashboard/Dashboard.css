@@ -1,4 +1,9 @@
+.dashboard{
+    min-height: calc(100vh - 140px);
+}
 .side-bar{
+    /* position: relative; */
+    /* height: 100%; */
     flex: 1.5;
     background-color: rgb(255, 255, 255);
     color: gray !important;
@@ -20,6 +25,11 @@
     transform: translateX(5px);
     background-color: rgb(235, 235, 235) !important;
 }
+/* .logOutButton{
+    border: 1px solid red;
+    position: absolute;
+    bottom: 40px;
+} */
 .pageContainer{
     flex: 4;
 }

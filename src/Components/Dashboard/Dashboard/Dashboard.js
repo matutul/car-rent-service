@@ -55,9 +55,9 @@ const Dashboard = () => {
     return (
         <div>
             <Navbar></Navbar>
-            <div className="row w-100">
+            <div className="row w-100 dashboard">
                 <div className="side-bar">
-                    <Nav className="flex-column  p-5 w-100">
+                    <Nav className="flex-column p-5 w-100">
                         <Nav.Link className={`w-100 px-3 py-2 my-2 side-bar-link ${page === "completedOrder" ? "active" : ""}`} onClick={() => displaySection('completedOrder')}><FontAwesomeIcon className="mr-1" icon={faBorderAll} /> Completed orders</Nav.Link>
                         <Nav.Link className={`w-100 px-3 py-2 my-2 side-bar-link ${page === "activeOrder" ? "active" : ""}`} onClick={() => displaySection('activeOrder')}><FontAwesomeIcon className="mr-1" icon={faThList} /> Active orders</Nav.Link>
                         {
@@ -68,7 +68,7 @@ const Dashboard = () => {
                                 <Nav.Link className={`w-100 px-3 py-2 my-2 side-bar-link ${page === "addAdmin" ? "active" : ""}`} onClick={() => displaySection('addAdmin')}><FontAwesomeIcon className="mr-1" icon={faUserPlus} /> Add Admin</Nav.Link>
                             </div>
                         }
-                        <Nav.Link className="w-100 px-3 py-2 my-2 side-bar-link" onClick={() => setLoggedInUser({})}><FontAwesomeIcon className="mr-1" icon={faSignOutAlt} /> Log out</Nav.Link>
+                        <Nav.Link className="w-100 px-3 py-2 my-2 side-bar-link logOutButton" onClick={() => setLoggedInUser({})}><FontAwesomeIcon className="mr-1" icon={faSignOutAlt} /> Log out</Nav.Link>
                     </Nav>
                 </div>
                 <div className="p-5 pageContainer">
