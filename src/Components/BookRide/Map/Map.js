@@ -9,7 +9,8 @@ const containerStyle = {
     width: '100%',
     height: '400px',
     borderRadius: '10px',
-    border: "2px solid darkgray"
+    // border: "2px solid darkgray",
+    boxShadow: "3px 3px 16px 2px rgba(102,102,102,0.64)"
 };
 
 const center = {

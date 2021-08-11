@@ -4,7 +4,7 @@ import { Card, Button } from 'react-bootstrap';
 import { bookingContext } from '../BookRide/BookRide';
 
 const Car = ({ car, addedCar }) => {
-    console.log(car);
+    // console.log(car);
     const [bookingInfo, setBookingInfo] = useContext(bookingContext);
     const addCarToBookingInfo = id => {
         const bookingInfoAddCar = { ...bookingInfo };

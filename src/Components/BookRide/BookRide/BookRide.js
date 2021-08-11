@@ -35,7 +35,7 @@ const BookRide = () => {
             .then(res => res.json())
             .then(data => setCars(data))
     }, [])
-    console.log(bookingInfo);
+    // console.log(bookingInfo);
     return (
         <bookingContext.Provider value={[bookingInfo, setBookingInfo]}>
             <Navbar></Navbar>
@@ -54,7 +54,7 @@ const BookRide = () => {
                     <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolorum repellendus quaerat quo nemo vitae, sequi neque tempora. Ea nam officiis excepturi in odio neque libero?</p>
                 </div>
                 <div className="row booking-section d-flex align-items-start">
-                    <div className="col-md-5 booking-form w-100 p-4 border my-4">
+                    <div className="col-md-5 booking-form w-100 p-4 border my-4 shadow">
                         {
                             summaryShow ? <BookingSummary summaryShow={summaryShow} setSummaryShow={setSummaryShow}></BookingSummary> : <BookingForm className="w-100" summaryShow={summaryShow} setSummaryShow={setSummaryShow}></BookingForm>
                         }
