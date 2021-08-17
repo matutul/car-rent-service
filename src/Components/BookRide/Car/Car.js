@@ -23,10 +23,11 @@ const Car = ({ car, addedCar }) => {
     else {
         classForCarCard = "col-md-4 p-3";
     }
+    console.log(car);
     return (
         <div className={`${classForCarCard}`}>
             <Card>
-                <Card.Img variant="top" src={car.photo} />
+                <Card.Img style={{height: "200px"}} variant="top" src={car.photo} />
                 <Card.Body>
                     <Card.Title>{car.carName}</Card.Title>
                     <Card.Text>
@@ -34,6 +35,7 @@ const Car = ({ car, addedCar }) => {
                         Model Year: {car.modelYear} <br />
                         Register Number: {car.number} <br />
                         Passenger Seat: {car.seat} <br />
+                        Rent per day: {car.rent} <br />
                         Price Per Kilometer: BDT {car.price}&#2547;
                     </Card.Text>
                     {

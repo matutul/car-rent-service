@@ -2,10 +2,12 @@ import React from 'react';
 import './AddCar.css';
 import { useForm } from "react-hook-form";
 import { useState } from 'react';
+import ModalSection from '../../Modal/ModalSection';
 
 const AddCar = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const [carPhotoUrl, setCarPhotoUrl] = useState("");
+    const [show, setShow] = useState(false);
 
     const onSubmit = data => {
         data.photo = carPhotoUrl;
@@ -18,7 +20,8 @@ const AddCar = () => {
             .then(res => res.json())
             .then(result => {
                 if (result) {
-                    alert("Car is added successfully")
+                    // alert("Car is added successfully")
+                    setShow(true);
                     setCarPhotoUrl("");
                     reset();
                 }
@@ -39,6 +42,12 @@ const AddCar = () => {
                 const photoUrl = data?.data?.display_url || "";
                 setCarPhotoUrl(photoUrl);
             })
+    }
+
+    const modalData = {
+        type: 'inform',
+        title: 'Success message',
+        body: 'Car is added successfully'
     }
 
     console.log(carPhotoUrl);
@@ -67,34 +76,36 @@ const AddCar = () => {
                         <input className="w-100 my-2 py-1 px-3 form-control" placeholder="Register number" {...register("number", { required: "Specify car registration number" })} />
                         {errors.number && <p className="text-warning">{errors.number.message}</p>}
                     </div>
-                    <div className="col-md-6">
+                    {/* <div className="col-md-6">
                         <input type="number" className="w-100 my-2 py-1 px-3 form-control" placeholder="Mileage" {...register("mileage", { required: "Specify car mileage" })} />
                         {errors.mileage && <p className="text-warning">{errors.mileage.message}</p>}
-                    </div>
+                    </div> */}
+
+
                     <div className="col-md-6">
                         <input type="number" className="w-100 my-2 py-1 px-3 form-control" placeholder="Passenger seat" {...register("seat",
-                            { required: "Specify quantity of passenger seat" },
-                            {
-                                min: 2,
-                                max: 20
-                            }
-                            )} />
+                            { required: "Specify quantity of passenger seat", min: 2, max: 20 }
+                        )} />
                         {errors.seat && <p className="text-warning">{errors.seat.message || "Select a value from 2 to 20"}</p>}
                     </div>
+
+
                     <div className="col-md-6">
                         <input type="number" className="w-100 my-2 py-1 px-3 form-control" placeholder="Rent per day" {...register("rent",
-                            { required: "Specify car rent per day" }, 
-                            { min: 0 }
+                            { required: "Specify car rent per day", min: 0 }
                         )} />
                         {errors.rent && <p className="text-warning">{errors.rent.message || "Select a positive value"}</p>}
                     </div>
+
+
                     <div className="col-md-6">
                         <input type="number" className="w-100 my-2 py-1 px-3 form-control" placeholder="Price per kilometer" {...register("price",
-                            { required: "Specify price per kilometer" },
-                            { min: 0 }
+                            { required: "Specify price per kilometer", min: 0 }
                         )} />
                         {errors.price && <p className="text-warning">{errors.price.message || "Select a positive value"}</p>}
                     </div>
+
+
                     <div className="col-md-6">
                         <input className="w-100 my-2 py-1 form-control" type="file" {...register("photo", { required: "Upload a car image" })} onChange={(event) => handleImageUpload(event)} />
                         {errors.photo && <p className="text-warning">{errors.photo.message}</p>}
@@ -112,6 +123,7 @@ const AddCar = () => {
                 </div>
                 )
             }
+            <ModalSection information={modalData} showState={[show, setShow]}></ModalSection>
         </div>
     );
 };

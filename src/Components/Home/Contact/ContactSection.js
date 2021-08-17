@@ -1,10 +1,10 @@
 import React from 'react';
-import './Contact.css';
+import './ContactSection.css';
 import car from '../../../image/car.jpg';
 
 const Contact = () => {
     return (
-        <div className="row w-100 contact d-flex align-items-center mx-auto">
+        <div className="row w-100 contactSection d-flex align-items-center mx-auto">
             <div className="col-md-6 p-0">
                 <img className="w-100" src={car} alt="" />
             </div>

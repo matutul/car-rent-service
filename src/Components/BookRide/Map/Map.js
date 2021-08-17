@@ -19,19 +19,21 @@ const center = {
 };
 
 const Map = () => {
-    const [directionResponse, setDirectionResponse] = useState(null);
-    const [distanceResponse, setDistanceResponse] = useState(null);
+
     const [bookingInfo, setBookingInfo] = useContext(bookingContext);
+    const [directionResponse, setDirectionResponse] = useState(null);
+    const [distanceMatrixResponse, setDistanceMatrixResponse] = useState(null);
 
     useEffect(() => {
         const updateDistance = {...bookingInfo};
-        updateDistance.distanceResponse = distanceResponse;
+        updateDistance.distanceResponse = distanceMatrixResponse;
         setBookingInfo(updateDistance);
-    }, [distanceResponse])
+        console.log(bookingInfo.distanceResponse)
+    }, [distanceMatrixResponse])
     
     useEffect(() => {
         setDirectionResponse(null);
-        setDistanceResponse(null);
+        setDistanceMatrixResponse(null);
     }, [bookingInfo?.start, bookingInfo?.end])
 
     return (
@@ -65,7 +67,7 @@ const Map = () => {
 
 
                 {
-                    (distanceResponse == null) && (bookingInfo.start && bookingInfo.end) && (
+                    (distanceMatrixResponse == null) && (bookingInfo.start && bookingInfo.end) && (
                         <DistanceMatrixService
                             options={{
                                 destinations: [bookingInfo?.end],
@@ -74,7 +76,7 @@ const Map = () => {
                             }}
                             callback={res => {
                                 if (res !== null) {
-                                    setDistanceResponse(res.rows[0].elements[0]);
+                                    setDistanceMatrixResponse(res.rows[0].elements[0]);
                                 }
                             }}
                         />

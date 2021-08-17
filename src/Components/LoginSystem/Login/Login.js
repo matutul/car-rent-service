@@ -4,13 +4,17 @@ import Navbar from '../../Shared/Navbar/Navbar/Navbar';
 import './Login.css';
 import carBg from '../../../image/carLoginPage.svg';
 import { useForm } from "react-hook-form";
-import { Button } from 'react-bootstrap';
+import { Button, Spinner } from 'react-bootstrap';
 import facebook from '../../../icons/facebookRound.svg';
 import google from '../../../icons/google.svg';
 import { Link, useLocation, useHistory } from "react-router-dom";
-import { signInWithEmailAndPassword } from '../Firebase/FirebaseFunction';
+import { initializeFirebaseAppFramework, setIdToken, signInWithEmailAndPassword } from '../Firebase/FirebaseFunction';
 import { useContext } from 'react';
 import { UserContext } from '../../../App';
+import { useState } from 'react';
+import ModalSection from '../../Modal/ModalSection';
+
+initializeFirebaseAppFramework();
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors }, reset, setFocus } = useForm();
@@ -18,20 +22,43 @@ const Login = () => {
     const location = useLocation();
     const history = useHistory()
     const { from } = location.state || { from: { pathname: "/" } };
-
+    const [loginLoading, setLoginLoading] = useState(false);
+    const [show, setShow] = useState(false);
+    const [modalData, setModalData] = useState({
+        type: '',
+        title: '',
+        body: ''
+    });
 
     const onSubmit = data => {
+        setLoginLoading(true);
         signInWithEmailAndPassword(data)
             .then(signinResponse => {
-                if (signinResponse.message) {
-                    alert(signinResponse.message);
-                    reset();
-                    setFocus('email');
-                }
+                setLoginLoading(false);
+
                 if (signinResponse.displayName) {
+                    console.log("Message log in page line 45: " + signinResponse.displayName);
+                    setIdToken();
                     setLoggedInUser(signinResponse);
                     history.replace(from);
                 }
+
+                if (signinResponse.message) {
+                    console.log("error message in log in page line 40: " + signinResponse.message);
+
+                    const newModalData = { ...modalData };
+                    newModalData.type = 'inform';
+                    newModalData.title = "Error Message";
+                    newModalData.body = signinResponse.message;
+                    setModalData(newModalData);
+                    setShow(true);
+
+                    // alert(signinResponse.message);
+                    reset();
+                    setFocus('email');
+                }
+
+
             })
     };
     const handleForgetPassword = () => {
@@ -54,14 +81,28 @@ const Login = () => {
                                     message: "This is not a valid email address."
                                 }
                             })} placeholder="Your email" />
-                            {errors.email && <p>{errors.email.message}</p>}
+                            {errors.email && <p className="text-warning">{errors.email.message}</p>}
 
 
                             <input className="form-control my-2" type="password" {...register("password", { required: true })} placeholder="Password" />
-                            {errors.password && <p>This field is required</p>}
+                            {errors.password && <p className="text-warning">This field is required</p>}
                             <p className="inline-text-link" onClick={handleForgetPassword}>Forget Passwrod?</p>
 
-                            <input className="form-control btn btn-success my-4" type="submit" value="Log in" />
+                            {/* <input className="form-control btn btn-success my-4" type="submit" value="Log in" /> */}
+                            <Button type="submit" className="my-4">
+                                {
+                                    loginLoading ?
+                                        <><Spinner
+                                            as="span"
+                                            animation="border"
+                                            size="sm"
+                                            role="status"
+                                            aria-hidden="true"
+                                        />
+                                            <span> Loading...</span>
+                                        </> : <span>Login</span>
+                                }
+                            </Button>
                             <p className="text-center">Not a Member? <Link to="/signup">Sign up</Link> </p>
 
                             <p className="row d-flex align-items-center"> <hr className="col-4" />OR<hr className="col-4" /> </p>
@@ -81,11 +122,13 @@ const Login = () => {
                     </div>
                     <div className="col-md-6 my-5">
                         <h2 className="text-center mb-5 pb-5">Welcome</h2>
-                        <img className="w-100" src={carBg} alt="" />
+                        <img className="w-100" style={{transform: 'translate(20%)'}} src={carBg} alt="" />
                     </div>
                 </div>
+
             </div>
             <Footer></Footer>
+            <ModalSection information={modalData} showState={[show, setShow]} ></ModalSection>
         </div>
     );
 };

@@ -7,9 +7,11 @@ import Map from '../Map/Map';
 import { useState } from 'react';
 import Car from '../Car/Car';
 import BookingSummary from '../BookingSummary/BookingSummary';
-import { Button } from 'react-bootstrap';
+import { Button, ProgressBar } from 'react-bootstrap';
 import { useContext } from 'react';
 import { UserContext } from '../../../App';
+import NavbarUpper from '../../Shared/Navbar/NavbarUpper/NavbarUpper';
+import NavbarMain from '../../Shared/Navbar/NavbarMain/NavbarMain';
 
 export const bookingContext = createContext();
 
@@ -38,38 +40,37 @@ const BookRide = () => {
     // console.log(bookingInfo);
     return (
         <bookingContext.Provider value={[bookingInfo, setBookingInfo]}>
-            <Navbar></Navbar>
-            <div className="header-image">
-                <div className="container d-flex flex-column justify-content-center text-white header-text">
-                    <div className="col-6">
-                        <h2>Book A Ride For You</h2>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit sapiente ipsa saepe ea quidem nulla dolore, quisquam dolor eum, error veritatis reiciendis necessitatibus laborum ut?</p>
-                    </div>
-                </div>
+            <NavbarUpper></NavbarUpper>
+            <div className="sticky-top">
+                <NavbarMain></NavbarMain>
             </div>
-            <div className="container mb-5">
-                <div className="text-center w-75 p-4 mt-5 mx-auto">
-                    <h5 className="default-color">BOOK RIDE HERE</h5>
-                    <h3>WELCOME TO US</h3>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolorum repellendus quaerat quo nemo vitae, sequi neque tempora. Ea nam officiis excepturi in odio neque libero?</p>
-                </div>
-                <div className="row booking-section d-flex align-items-start">
-                    <div className="col-md-5 booking-form w-100 p-4 border my-4 shadow">
-                        {
-                            summaryShow ? <BookingSummary summaryShow={summaryShow} setSummaryShow={setSummaryShow}></BookingSummary> : <BookingForm className="w-100" summaryShow={summaryShow} setSummaryShow={setSummaryShow}></BookingForm>
-                        }
-                        {
-                            (bookingInfo.car) && <div className="mt-5">
-                                <h4>Selected Car:</h4>
-                                <Car car={bookingInfo.car} addedCar={true}></Car>
-                            </div>
-                        }
-                        {
-                            bookingInfo.distanceResponse && bookingInfo.car && <Button className="w-100">Submit for Booking</Button>
-                        }
 
+
+
+            <div className="container">
+
+                <div style={{ backgroundColor: 'rgba(250, 250, 250, 0.8)' }} className="progressbar mt-5 p-4 shadow">
+                    <ProgressBar className="my-2" now={45} />
+                </div>
+
+                <div className="row booking-section w-100 my-5 mx-0">
+                    <div className="col-md-5 my-4">
+                        <div className="p-4 w-100 booking-form shadow">
+                            {
+                                summaryShow ? <BookingSummary summaryShow={summaryShow} setSummaryShow={setSummaryShow}></BookingSummary> : <BookingForm summaryShow={summaryShow} setSummaryShow={setSummaryShow}></BookingForm>
+                            }
+                            {
+                                (bookingInfo.car) && <div className="mt-5">
+                                    <h4>Selected Car:</h4>
+                                    <Car car={bookingInfo.car} addedCar={true}></Car>
+                                </div>
+                            }
+                            {
+                                bookingInfo.distanceResponse && bookingInfo.car && <Button className="w-100">Submit for Booking</Button>
+                            }
+                        </div>
                     </div>
-                    <div className="col-md-7 my-4">
+                    <div className="col-md-7 my-4 w-100">
                         <Map></Map>
                     </div>
                 </div>

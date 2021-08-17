@@ -15,25 +15,26 @@ const NavbarMain = () => {
 
     const handleSignOut = () => {
         setLoggedInUser({});
+        sessionStorage.removeItem('idToken');
     }
     // const handleLogIn = () => {
     //     history.push('/login');
     // }
     return (
         <div className="main-nav">
-            <Navbar className="nav-bar" collapseOnSelect expand="lg" bg="dark" variant="dark">
+            <Navbar className="nav-bar" collapseOnSelect expand="lg" variant="dark">
                 <div className="container">
-
+                    <Navbar.Brand href="#home">MOLLA RENTAL SERVICE</Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="mr-auto">
                             <Nav.Link onClick={() => routeToPath('/home')}>Home</Nav.Link>
                             <Nav.Link onClick={() => routeToPath('/book')}>Book A Ride</Nav.Link>
-                            <Nav.Link onClick={() => routeToPath('/dashboard')}>Dashboard</Nav.Link>
+                            <Nav.Link onClick={() => routeToPath('/dashboard/activeOrder')}>Dashboard</Nav.Link>
                             <Nav.Link onClick={() => routeToPath('/about')}>About Us</Nav.Link>
                             <Nav.Link onClick={() => routeToPath('/contact')}>Contact</Nav.Link>
                         </Nav>
-                        <Nav>
+                        <Nav className="justify-content-end">
                             {
                                 loggedInUser.displayName ? (<NavDropdown title={loggedInUser.displayName} id="collasible-nav-dropdown" className="link">
                                     <NavDropdown.Item to="/profile">Profile</NavDropdown.Item>

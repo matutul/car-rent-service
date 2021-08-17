@@ -6,7 +6,7 @@ import { Carousel } from 'react-bootstrap';
 const Header = () => {
     return (
         <div>
-            <Navbar></Navbar>
+            {/* <Navbar></Navbar> */}
             <div className="header">
                 <Carousel className="carousel-div" fade>
                     <Carousel.Item className="carousel-item-1" interval={4000}>

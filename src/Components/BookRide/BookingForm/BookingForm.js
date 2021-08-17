@@ -6,20 +6,29 @@ import { bookingContext } from '../BookRide/BookRide';
 import { UserContext } from '../../../App';
 
 const BookingForm = ({ summaryShow, setSummaryShow }) => {
-    const [loggedinUser,] = useContext(UserContext);
+
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
+    const [loggedinUser, setLoggedinUser] = useContext(UserContext);
     const [bookingInfo, setBookingInfo] = useContext(bookingContext);
 
-    useEffect(() => {
-        reset(bookingInfo);
-    }, [reset])
+
+    // useEffect(() => {
+    //     reset(loggedinUser);
+    //     reset(bookingInfo);
+    // }, [reset])
 
     const onSubmit = data => {
+        console.log(data);
+        const startDate = new Date(data.pickDate);
+        const endDate = new Date(data.dropDate);
+        const totalDuration = endDate.getTime() - startDate.getTime();
+        const totalDays = (totalDuration / (1000 * 3600 * 24)) + 1;
+        console.log(totalDays);
         if (bookingInfo.distanceResponse?.status === "NOT_FOUND") {
             alert("Please fill with proper value such as more specific location.");
         }
         else {
-            const newBookingInfo = { distanceResponse: bookingInfo.distanceResponse, ...data, car: bookingInfo.car }
+            const newBookingInfo = { distanceResponse: bookingInfo.distanceResponse, ...data, totalDays, car: bookingInfo.car }
             setBookingInfo(newBookingInfo);
             setSummaryShow(true);
         }
@@ -53,11 +62,22 @@ const BookingForm = ({ summaryShow, setSummaryShow }) => {
                 {errors.phone && <p className="text-warning">This is field is required</p>}
 
                 {/* include validation with required or other standard HTML validation rules */}
-                <input className="w-100 my-2 py-1 px-3 form-control" placeholder="Start Destination" defaultValue={bookingInfo?.start}  {...register("start", { required: true })} onChange={handleOnChange}/>
+                <input className="w-100 my-2 py-1 px-3 form-control" placeholder="Start Destination" defaultValue={bookingInfo?.start}  {...register("start", { required: true })} onChange={handleOnChange} />
                 {errors.start && <p className="text-warning">This is field is required</p>}
 
                 <input className="w-100 my-2 py-1 px-3 form-control" placeholder="End Destination" defaultValue={bookingInfo?.end} {...register("end", { required: true })} onChange={handleOnChange} />
                 {errors.end && <p className="text-warning">This is field is required</p>}
+
+                <label  className="my-2">
+                    <input
+                        className="mr-2"
+                        {...register("updown")}
+                        name="updown"
+                        value={true}
+                        type="checkbox"
+                    />
+                    Updown
+                </label>
 
                 {
                     (bookingInfo.distanceResponse && bookingInfo?.distanceResponse?.status !== "NOT_FOUND") && <div className="row my-3">

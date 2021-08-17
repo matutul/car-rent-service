@@ -7,7 +7,7 @@ import { UserContext } from '../../../App';
 
 const BookARide = () => {
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const [loggedinUser, setLoggedinUser] = useContext(UserContext);
 
     const history = useHistory();

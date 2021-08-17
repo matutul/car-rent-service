@@ -1,7 +1,20 @@
 import React from 'react';
+import { useState } from 'react';
 import { Button } from 'react-bootstrap';
+import ModalSection from '../../../Modal/ModalSection';
 
-const Admin = ({ admin, index }) => {
+const Admin = ({ admin, index, handleRemove }) => {
+
+    const [show, setShow] = useState(false);
+
+    const handleShow = () => setShow(true);
+
+    const modalData = {
+        type: 'confirm',
+        title: 'Removing Admin',
+        body: `Warning: This Admin will be removed from the list permanently. Are you sure you want to remove?`
+    }
+    
     return (
         <tr>
             <td>{index + 1}</td>
@@ -14,9 +27,11 @@ const Admin = ({ admin, index }) => {
             }
 
             <td>
-                <Button variant="warning " className="mx-2">Edit</Button>
-                <Button variant="danger" className="mx-2">Remove</Button>
+                <Button variant="danger" className="mx-2" onClick={() => handleShow()}>Remove</Button>
             </td>
+            {
+               show && <ModalSection information={modalData} action={() => handleRemove(admin._id)} showState={[show, setShow]}></ModalSection>
+            }
         </tr>
     );
 };
