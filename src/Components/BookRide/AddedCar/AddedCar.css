@@ -1,0 +1,42 @@
+.addedCar{
+    background-color: white;
+    border-radius: 50px;
+    padding: 8px;
+    cursor: default;
+    transition: .5s;
+}
+.addedCar:hover{
+    background-color: rgb(32, 118, 255);
+    color: white;
+}
+.addedCar:hover .td{
+    color: white;
+}
+.addedCar:hover .carImage img{
+    border: 2px solid white;
+}
+.carImage{
+    flex: 1;
+}
+.carImage img{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    content: cover;
+}
+.details{
+    flex: 3;
+}
+.details p{
+    margin: 0 auto;
+}
+.action{
+    flex: .5;
+}
+.minusButton{
+    font-size: 2rem;
+    transition: .3s;
+}
+.minusButton:hover{
+    color: rgb(255, 255, 255) !important;
+}

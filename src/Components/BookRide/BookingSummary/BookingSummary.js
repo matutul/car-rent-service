@@ -1,116 +1,69 @@
 import React, { useContext } from 'react';
 import { bookingContext } from '../BookRide/BookRide';
 import { Table } from 'react-bootstrap';
-import { useState, useEffect } from 'react';
+// import { useState, useEffect } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+import './BookingSummary.css';
 
 const BookingSummary = ({ summaryShow, setSummaryShow }) => {
 
     const [bookingInfo,] = useContext(bookingContext);
-    const [invoice, setInvoice] = useState({
-        totalDays: bookingInfo.totalDays,
-        totalKilo: '',
-        priceForKilo: '',
-        rentForDays: '',
-        total: ''
-    })
+    // const [savedCar, setSavedCar] = useState(bookingInfo.car || {});
 
-    useEffect(() => {
-        if (bookingInfo.car) {
-            if (bookingInfo.distanceResponse) {
-                console.log(bookingInfo.distanceResponse);
-                const newInvoice = { ...invoice };
-                newInvoice.totalKilo = (parseFloat(bookingInfo.distanceResponse?.distance?.text)).toFixed(2);
-                if (bookingInfo.updown) {
-                    newInvoice.totalKilo = (parseFloat(newInvoice.totalKilo) * 2).toFixed(2);
-                }
-                newInvoice.priceForKilo = (parseFloat(newInvoice.totalKilo) * bookingInfo.car?.price).toFixed(2);
-                newInvoice.rentForDays = (parseFloat(bookingInfo.totalDays) * parseFloat(bookingInfo.car.rent)).toFixed(2);
-                newInvoice.total = (parseFloat(newInvoice.priceForKilo) + parseFloat(newInvoice.rentForDays)).toFixed(2);
-                setInvoice(newInvoice);
-            }
-            else {
-                const newInvoice = { ...invoice };
-                newInvoice.priceForKilo = "Distance not found";
-                newInvoice.rentForDays = "Distance not found";
-                newInvoice.total = "Distance not found";
-                setInvoice(newInvoice);
-            }
-            console.log("car is added")
-
-        }
-        else {
-            const newInvoice = { ...invoice };
-            newInvoice.priceForKilo = "Add car";
-            newInvoice.rentForDays = "Add car";
-            newInvoice.total = "Add car";
-            setInvoice(newInvoice);
-        }
-    }, [bookingInfo.car])
-
+    // useEffect(() => {
+    //     setSavedCar(bookingInfo.car);
+    // }, [bookingInfo])
 
     return (
         <div>
-            <h4>Booking Information:</h4>
+            <div className="bookingInformationTitle d-flex justify-content-center align-items-center text-center shadow mb-3 p-2">
+                <h4>Booking Information</h4>
+                <div className="editButtonDiv ml-5 d-flex justify-content-center align-items-center p-2"  onClick={() => setSummaryShow(false)}>
+                    <FontAwesomeIcon className="editBookingInformation" icon={faPencilAlt} />
+                </div>
+            </div>
             <Table striped borderless hover size="sm">
                 <tbody>
                     <tr>
-                        <th scope="col">Name</th>
+                        <td scope="col">Name</td>
                         <td>{bookingInfo.name}</td>
                     </tr>
                     <tr>
-                        <th scope="col">Phone</th>
+                        <td scope="col">Phone</td>
                         <td>{bookingInfo.phone}</td>
                     </tr>
                     <tr>
-                        <th scope="col">Origin</th>
+                        <td scope="col">Origin</td>
                         <td>{bookingInfo.start}</td>
                     </tr>
                     <tr>
-                        <th scope="col">Destination</th>
+                        <td scope="col">Destination</td>
                         <td>{bookingInfo.end}</td>
                     </tr>
                     <tr>
-                        <th scope="col">Distance</th>
+                        <td scope="col">Distance</td>
                         <td>{bookingInfo.distanceResponse?.distance?.text}</td>
                     </tr>
                     <tr>
-                        <th scope="col">Duration</th>
+                        <td scope="col">Duration</td>
                         <td>{bookingInfo.distanceResponse?.duration?.text}</td>
                     </tr>
                     <tr>
-                        <th scope="col">Pick Date</th>
+                        <td scope="col">Pick Date</td>
                         <td>{bookingInfo.pickDate}</td>
                     </tr>
                     <tr>
-                        <th scope="col">Drop Date</th>
+                        <td scope="col">Drop Date</td>
                         <td>{bookingInfo.dropDate}</td>
                     </tr>
                     <tr>
-                        <th scope="col">Total Days</th>
+                        <td scope="col">Total Days</td>
                         <td>{bookingInfo.totalDays}</td>
                     </tr>
-                    {
-                        bookingInfo.car && bookingInfo.distanceResponse?.distance && (
-                            <>
-                                <tr>
-                                    <th scope="col">Rent</th>
-                                    <td>{invoice.rentForDays}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="col">Price for kilo.</th>
-                                    <td>{invoice.priceForKilo}</td>
-                                </tr>
-                                <tr>
-                                    <th scope="col">Total</th>
-                                    <td>{invoice.total}</td>
-                                </tr>
-                            </>
-                        )
-                    }
-
                 </tbody>
             </Table>
-            <button className="btn btn-warning" onClick={() => setSummaryShow(false)}>Edit</button>
+            {/* <button className="btn btn-warning" onClick={() => setSummaryShow(false)}>Edit</button> */}
         </div>
     );
 };

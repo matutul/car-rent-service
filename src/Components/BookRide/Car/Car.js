@@ -1,33 +1,56 @@
 import React from 'react';
+// import { useState, useEffect } from 'react';
 import { useContext } from 'react';
 import { Card, Button } from 'react-bootstrap';
 import { bookingContext } from '../BookRide/BookRide';
 
-const Car = ({ car, addedCar }) => {
-    // console.log(car);
+const Car = ({ car }) => {
     const [bookingInfo, setBookingInfo] = useContext(bookingContext);
-    const addCarToBookingInfo = id => {
+
+    const addCarToBookingInfo = () => {
+
+        //Charge for this car based on the given basic booking information
+        const dayRent = parseFloat(car.rent);
+        const kiloPrice = parseFloat(car.price);
+        const days = bookingInfo.totalDays;
+        let totalKilos = bookingInfo.distanceResponse.distance.value / 1000;
+
+        if (bookingInfo.updown) {
+            totalKilos = totalKilos * 2;
+        }
+        //calculation
+        const totalRent = days * dayRent;
+        const totalPrice = kiloPrice * totalKilos;
+        const totalCharge = totalRent + totalPrice;
+        car.totalRent = totalRent;
+        car.totalPrice = totalPrice;
+        car.totalCharge = totalCharge;
+
+
+        //adding this car to the booking form information dataset
         const bookingInfoAddCar = { ...bookingInfo };
-        bookingInfoAddCar.car = car;
+        if (!bookingInfo.car || bookingInfoAddCar.car.length <= 0) {
+            bookingInfoAddCar.car = [car];
+        }
+        else {
+            const sameCar = bookingInfoAddCar.car.find(savedCar => savedCar._id === car._id);
+            if (sameCar) {
+                alert("The car is already added.");
+            }
+            else {
+                bookingInfoAddCar.car = [...bookingInfoAddCar.car, car];
+            }
+        }
         setBookingInfo(bookingInfoAddCar);
+        localStorage.setItem('bookingInfo', JSON.stringify(bookingInfoAddCar));
     }
-    const removeCar = () => {
-        const updateBookingInfoAfterRemovingCar = { ...bookingInfo };
-        delete updateBookingInfoAfterRemovingCar.car;
-        setBookingInfo(updateBookingInfoAfterRemovingCar);
-    }
-    let classForCarCard = "";
-    if (addedCar) {
-        classForCarCard = "col-md-12 my-3";
-    }
-    else {
-        classForCarCard = "col-md-4 p-3";
-    }
+
     console.log(car);
+
     return (
-        <div className={`${classForCarCard}`}>
-            <Card>
-                <Card.Img style={{height: "200px"}} variant="top" src={car.photo} />
+        <div className="p-2">
+            <Card style={{width:'280px'}}>
+                <Card.Img style={{ height: "160px", container: 'fit-content' }} variant="top" src={car.photo} />
                 <Card.Body>
                     <Card.Title>{car.carName}</Card.Title>
                     <Card.Text>
@@ -38,10 +61,7 @@ const Car = ({ car, addedCar }) => {
                         Rent per day: {car.rent} <br />
                         Price Per Kilometer: BDT {car.price}&#2547;
                     </Card.Text>
-                    {
-                        addedCar ? <Button variant="danger" onClick={removeCar}>Remove</Button> : <Button variant="success" onClick={() => addCarToBookingInfo(car)}>Add for ride</Button>
-                    }
-
+                    <Button variant="success" onClick={addCarToBookingInfo}>Add for ride</Button>
                 </Card.Body>
             </Card>
         </div>

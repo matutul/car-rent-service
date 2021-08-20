@@ -21,7 +21,7 @@ const Admins = () => {
 
     const handleRemove = (adminId) => {
         setShowLoading(true);
-        fetch('http://localhost:4000/deleteAdmin', {
+        fetch('https://rocky-waters-70556.herokuapp.com/deleteAdmin', {
             method: 'POST',
             headers: { 'content-type': 'application/json' },
             body: JSON.stringify({ id: adminId })

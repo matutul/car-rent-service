@@ -4,6 +4,7 @@ import 'react-calendar/dist/Calendar.css';
 import { useContext, useEffect } from 'react';
 import { bookingContext } from '../BookRide/BookRide';
 import { UserContext } from '../../../App';
+// import { useState } from 'react';
 
 const BookingForm = ({ summaryShow, setSummaryShow }) => {
 
@@ -11,11 +12,20 @@ const BookingForm = ({ summaryShow, setSummaryShow }) => {
     const [loggedinUser, setLoggedinUser] = useContext(UserContext);
     const [bookingInfo, setBookingInfo] = useContext(bookingContext);
 
-
     // useEffect(() => {
-    //     reset(loggedinUser);
     //     reset(bookingInfo);
     // }, [reset])
+
+    useEffect(() => {
+        const savedBookingInfo = JSON.parse(window.localStorage.getItem('bookingInfo')) || {};
+        if (savedBookingInfo) {
+            setBookingInfo(savedBookingInfo);
+        }
+    }, [])
+
+    useEffect(() => {
+        reset(bookingInfo);
+    }, [reset])
 
     const onSubmit = data => {
         console.log(data);
@@ -24,12 +34,15 @@ const BookingForm = ({ summaryShow, setSummaryShow }) => {
         const totalDuration = endDate.getTime() - startDate.getTime();
         const totalDays = (totalDuration / (1000 * 3600 * 24)) + 1;
         console.log(totalDays);
+
         if (bookingInfo.distanceResponse?.status === "NOT_FOUND") {
             alert("Please fill with proper value such as more specific location.");
         }
         else {
-            const newBookingInfo = { distanceResponse: bookingInfo.distanceResponse, ...data, totalDays, car: bookingInfo.car }
+            const newBookingInfo = { ...bookingInfo, ...data, totalDays }
             setBookingInfo(newBookingInfo);
+
+            localStorage.setItem("bookingInfo", JSON.stringify(newBookingInfo));
             setSummaryShow(true);
         }
     };
@@ -48,6 +61,12 @@ const BookingForm = ({ summaryShow, setSummaryShow }) => {
         console.log(bookingInfo);
     }
 
+    const handleCheckBoxClick = () => {
+        const updateUpdown = { ...bookingInfo };
+        updateUpdown.updown = !bookingInfo.updown;
+        updateUpdown.car = [];
+        setBookingInfo(updateUpdown);
+    }
 
 
     return (
@@ -68,12 +87,14 @@ const BookingForm = ({ summaryShow, setSummaryShow }) => {
                 <input className="w-100 my-2 py-1 px-3 form-control" placeholder="End Destination" defaultValue={bookingInfo?.end} {...register("end", { required: true })} onChange={handleOnChange} />
                 {errors.end && <p className="text-warning">This is field is required</p>}
 
-                <label  className="my-2">
+                <label className="my-2">
                     <input
                         className="mr-2"
                         {...register("updown")}
                         name="updown"
                         value={true}
+                        checked={bookingInfo.updown}
+                        onClick={handleCheckBoxClick}
                         type="checkbox"
                     />
                     Updown

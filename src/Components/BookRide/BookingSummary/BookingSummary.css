@@ -1,0 +1,18 @@
+.bookingInformationTitle{
+    border-radius: 10px;
+}
+.editButtonDiv{
+    width: 40px;
+    height: 40px;
+    padding: 3px;
+    border-radius: 50%;
+    color: gray;
+    transition: .3s;
+}
+.editButtonDiv:hover{
+    background-color: rgb(243, 204, 31);
+    color: white;
+}
+.editBookingInformation{
+    font-size: 1.2rem;
+}

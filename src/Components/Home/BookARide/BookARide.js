@@ -2,19 +2,15 @@ import React from 'react';
 import { useForm } from "react-hook-form";
 import './BookARide.css';
 import { useHistory } from 'react-router-dom';
-import { useContext } from 'react';
-import { UserContext } from '../../../App';
 
 const BookARide = () => {
 
-    const { register, handleSubmit, formState: { errors }, reset } = useForm();
-    const [loggedinUser, setLoggedinUser] = useContext(UserContext);
+    const { register, handleSubmit, formState: { errors } } = useForm();
 
     const history = useHistory();
     const onSubmit = data => {
-        const bookARideInfoFromHome = { ...loggedinUser };
-        bookARideInfoFromHome.bookingInfoFromHome = data;
-        setLoggedinUser(bookARideInfoFromHome);
+        console.log(data);
+        localStorage.setItem('bookingInfo', JSON.stringify(data));
         history.push('/book');
     };
 
@@ -44,13 +40,6 @@ const BookARide = () => {
                         <input className="form-control btn bookARideSubmitBtn" type="submit" value="Book A Ride" />
                     </div>
                 </div>
-
-
-
-
-
-
-
             </form>
         </div>
     );

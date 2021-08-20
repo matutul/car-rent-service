@@ -3,7 +3,9 @@ import Home from './Components/Home/Home/Home';
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  useLocation,
+  useHistory
 } from "react-router-dom";
 import NotFound from './Components/NotFound/NotFound';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -17,16 +19,19 @@ import Login from './Components/LoginSystem/Login/Login';
 import Signup from './Components/LoginSystem/Signup/Signup';
 import PrivateRoute from './Components/LoginSystem/PrivateRoute/PrivateRoute';
 
+
+
 export const UserContext = createContext();
 
 function App() {
 
   const [loggedinUser, setLoggedinUser] = useState({});
+  const history = useHistory()
+  
 
   useEffect(() => {
-    console.log(sessionStorage.getItem('idToken'))
     if (sessionStorage.getItem('idToken')) {
-      fetch('http://localhost:4000/checkUsers', {
+      fetch('https://rocky-waters-70556.herokuapp.com/checkUsers', {
         method: 'GET',
         headers: {
           'content-type': 'application/json',
@@ -35,8 +40,9 @@ function App() {
       })
         .then(res => res.json())
         .then(result => {
-          if(result.email && result.name){
-            setLoggedinUser({displayName: result.name, email: result.email});
+          if (result.email && result.name) {
+            setLoggedinUser({ displayName: result.name, email: result.email });
+            history.replace('/');
           }
         })
     }
@@ -59,11 +65,11 @@ function App() {
           <PrivateRoute exact path='/dashboard'>
             <Dashboard />
           </PrivateRoute>
-          <PrivateRoute path='/dashboard/:pageName'>
-            <Dashboard />
-          </PrivateRoute>
           <PrivateRoute path='/dashboard/activeOrder'>
             <Dashboard></Dashboard>
+          </PrivateRoute>
+          <PrivateRoute path='/dashboard/:pageName'>
+            <Dashboard />
           </PrivateRoute>
 
 

@@ -22,7 +22,7 @@ const Cars = () => {
     }, [updateAllCars])
 
     const handleRemove = (carId) => {
-        fetch('http://localhost:4000/deleteCar', {
+        fetch('https://rocky-waters-70556.herokuapp.com/deleteCar', {
             method: 'POST',
             headers: { 'content-type': 'application/json' },
             body: JSON.stringify({ id: carId })

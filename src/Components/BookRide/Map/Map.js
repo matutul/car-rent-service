@@ -25,12 +25,18 @@ const Map = () => {
     const [distanceMatrixResponse, setDistanceMatrixResponse] = useState(null);
 
     useEffect(() => {
-        const updateDistance = {...bookingInfo};
-        updateDistance.distanceResponse = distanceMatrixResponse;
-        setBookingInfo(updateDistance);
-        console.log(bookingInfo.distanceResponse)
+
+        // localStorage.removeItem('bookingInfo');
+        if (distanceMatrixResponse != null) {
+            const updateDistance = { ...bookingInfo };
+            // console.log("from map: " + updateDistance);
+            updateDistance.distanceResponse = distanceMatrixResponse;
+            localStorage.setItem('bookingInfo', JSON.stringify(updateDistance));
+            setBookingInfo(updateDistance);
+            // console.log(bookingInfo.distanceResponse)
+        }
     }, [distanceMatrixResponse])
-    
+
     useEffect(() => {
         setDirectionResponse(null);
         setDistanceMatrixResponse(null);
