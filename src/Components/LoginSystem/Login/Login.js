@@ -37,14 +37,14 @@ const Login = () => {
                 setLoginLoading(false);
 
                 if (signinResponse.displayName) {
-                    console.log("Message log in page line 45: " + signinResponse.displayName);
+                    // console.log("Message log in page line 45: " + signinResponse.displayName);
                     setIdToken();
                     setLoggedInUser(signinResponse);
                     history.replace(from);
                 }
 
                 if (signinResponse.message) {
-                    console.log("error message in log in page line 40: " + signinResponse.message);
+                    // console.log("error message in log in page line 40: " + signinResponse.message);
 
                     const newModalData = { ...modalData };
                     newModalData.type = 'inform';
@@ -105,7 +105,7 @@ const Login = () => {
                             </Button>
                             <p className="text-center">Not a Member? <Link to="/signup">Sign up</Link> </p>
 
-                            <p className="row d-flex align-items-center"> <hr className="col-4" />OR<hr className="col-4" /> </p>
+                            {/* <p className="row d-flex align-items-center"> <hr className="col-4" />OR<hr className="col-4" /> </p> */}
 
 
                             <Button variant="outline-secondary" className="d-flex align-items-center my-2 secondary-login border" disabled>

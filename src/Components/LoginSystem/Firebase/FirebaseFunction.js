@@ -56,7 +56,7 @@ export const signInWithEmailAndPassword = user => {
             //             return isVerified;
             //         });
             // }
-            console.log(user);
+            // console.log(user);
             return user;
         })
         .catch((error) => {
@@ -70,7 +70,7 @@ export const setIdToken = () => {
         // ...
         sessionStorage.setItem('idToken', idToken);
     }).catch(function (error) {
-        console.log('idToken error' + error);
+        // console.log('idToken error' + error);
         // Handle error
     });
 }

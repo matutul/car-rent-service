@@ -22,14 +22,15 @@ import NavbarMain from '../../Shared/Navbar/NavbarMain/NavbarMain';
 
 
 const Dashboard = () => {
-    const [page, setPage] = useState("");
-    const { pageName } = useParams();
     const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+    const [page, setPage] = useState("activeOrder");
+    const { pageName } = useParams();
     const [isAdmin, setIsAdmin] = useState(false);
     const [showLoading, setShowLoading] = useState(true);
 
     useEffect(() => {
         setPage(pageName);
+        // console.log('setPage : ', pageName);
     }, [pageName])
 
     useEffect(() => {

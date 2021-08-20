@@ -23,7 +23,7 @@ const BookRide = () => {
     useEffect(() => {
 
         const retrievedObject = JSON.parse(localStorage.getItem('bookingInfo'));
-        console.log('retrievedObject: ', retrievedObject);
+        // console.log('retrievedObject: ', retrievedObject);
         if (retrievedObject) {
             setBookingInfo(retrievedObject);
         }

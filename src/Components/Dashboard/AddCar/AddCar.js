@@ -50,7 +50,7 @@ const AddCar = () => {
         body: 'Car is added successfully'
     }
 
-    console.log(carPhotoUrl);
+    // console.log(carPhotoUrl);
 
     return (
         <div>

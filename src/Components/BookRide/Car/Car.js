@@ -45,7 +45,7 @@ const Car = ({ car }) => {
         localStorage.setItem('bookingInfo', JSON.stringify(bookingInfoAddCar));
     }
 
-    console.log(car);
+    // console.log(car);
 
     return (
         <div className="p-2">

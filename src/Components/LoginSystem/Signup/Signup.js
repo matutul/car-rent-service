@@ -33,13 +33,13 @@ const Signup = () => {
 
     const onSubmit = data => {
         setLoginLoading(true);
-        console.log(data);
+        // console.log(data);
 
         createUserWithEmailAndPassword(data)
             .then(result => {
-                console.log(result);
+                // console.log(result);
                 if (!result.message) {
-                    console.log('In the result displayName field: ' + result.displayName);
+                    // console.log('In the result displayName field: ' + result.displayName);
 
                     const newModalData = { ...modalData };
                     newModalData.type = 'inform';
@@ -49,7 +49,7 @@ const Signup = () => {
                     setShow(true);
 
                     setLoggedInUser(result);
-                    console.log(loggedInUser);
+                    // console.log(loggedInUser);
                     setLoginLoading(false);
                     alert('Sign up is successfully done..! You can log in now..');
                     history.push('/login');
@@ -129,7 +129,7 @@ const Signup = () => {
                             </Button>
 
                             <p className="text-center">Already a Member? <Link to="/login">Sign in</Link> </p>
-                            <p className="row d-flex align-items-center"> <hr className="col-4" />OR<hr className="col-4" /> </p>
+                            {/* <p className="row d-flex align-items-center"> <hr className="col-4" />OR<hr className="col-4" /> </p> */}
 
 
                             <Button variant="outline-secondary" className="d-flex align-items-center my-2 secondary-login border" disabled>

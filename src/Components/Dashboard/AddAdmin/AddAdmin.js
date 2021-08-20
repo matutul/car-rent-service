@@ -41,7 +41,7 @@ const AddAdmin = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
+                // console.log(data);
                 const photoUrl = data?.data?.thumb.url;
                 setAdminPhotoUrl(photoUrl);
             })

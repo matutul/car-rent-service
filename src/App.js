@@ -1,12 +1,6 @@
 import './App.css';
 import Home from './Components/Home/Home/Home';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  useLocation,
-  useHistory
-} from "react-router-dom";
+
 import NotFound from './Components/NotFound/NotFound';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import BookRide from './Components/BookRide/BookRide/BookRide';
@@ -18,6 +12,13 @@ import { useState } from 'react';
 import Login from './Components/LoginSystem/Login/Login';
 import Signup from './Components/LoginSystem/Signup/Signup';
 import PrivateRoute from './Components/LoginSystem/PrivateRoute/PrivateRoute';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useLocation,
+  useHistory
+} from "react-router-dom";
 
 
 
@@ -26,7 +27,9 @@ export const UserContext = createContext();
 function App() {
 
   const [loggedinUser, setLoggedinUser] = useState({});
-  const history = useHistory()
+  // const location = useLocation();
+  // const history = useHistory();
+  // const { from } = location.state || { from: { pathname: "/" } };
   
 
   useEffect(() => {
@@ -42,7 +45,7 @@ function App() {
         .then(result => {
           if (result.email && result.name) {
             setLoggedinUser({ displayName: result.name, email: result.email });
-            history.replace('/');
+            // history.replace(from);
           }
         })
     }
@@ -62,13 +65,14 @@ function App() {
             <BookRide></BookRide>
           </Route>
 
-          <PrivateRoute exact path='/dashboard'>
+          
+          {/* <PrivateRoute path='/dashboard/activeOrder'>
+            <Dashboard></Dashboard>
+          </PrivateRoute> */}
+          <PrivateRoute path='/dashboard/:pageName'>
             <Dashboard />
           </PrivateRoute>
-          <PrivateRoute path='/dashboard/activeOrder'>
-            <Dashboard></Dashboard>
-          </PrivateRoute>
-          <PrivateRoute path='/dashboard/:pageName'>
+          <PrivateRoute exact path='/dashboard'>
             <Dashboard />
           </PrivateRoute>
 

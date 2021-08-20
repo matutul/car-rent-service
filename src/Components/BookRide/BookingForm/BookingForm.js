@@ -28,12 +28,12 @@ const BookingForm = ({ summaryShow, setSummaryShow }) => {
     }, [reset])
 
     const onSubmit = data => {
-        console.log(data);
+        // console.log(data);
         const startDate = new Date(data.pickDate);
         const endDate = new Date(data.dropDate);
         const totalDuration = endDate.getTime() - startDate.getTime();
         const totalDays = (totalDuration / (1000 * 3600 * 24)) + 1;
-        console.log(totalDays);
+        // console.log(totalDays);
 
         if (bookingInfo.distanceResponse?.status === "NOT_FOUND") {
             alert("Please fill with proper value such as more specific location.");
@@ -58,7 +58,7 @@ const BookingForm = ({ summaryShow, setSummaryShow }) => {
             updateBookingInfo.end = e.target.value;
             setBookingInfo(updateBookingInfo);
         }
-        console.log(bookingInfo);
+        // console.log(bookingInfo);
     }
 
     const handleCheckBoxClick = () => {

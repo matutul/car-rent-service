@@ -13,10 +13,10 @@ const Admins = () => {
     useEffect(() => {
         fetch('https://rocky-waters-70556.herokuapp.com/admins')
             .then(res => res.json())
-            .then(data => { 
+            .then(data => {
                 setAdmins(data);
                 setShowLoading(false);
-             })
+            })
     }, [updateAdminsTable])
 
     const handleRemove = (adminId) => {
@@ -62,11 +62,15 @@ const Admins = () => {
                                     admins.map((admin, index) => <Admin key={admin._id} admin={admin} index={index} handleRemove={handleRemove}></Admin>)
                                 }
                             </tbody>
-                            : <td colspan="9" borderless="true">
-                                <div className="w-100 py-4 d-flex justify-content-center align-items-center">
-                                    <Spinner animation="border" variant="secondary" />
-                                </div>
-                            </td>
+                            : <tbody>
+                                <tr>
+                                    <td colSpan="9" borderless="true">
+                                        <div className="w-100 py-4 d-flex justify-content-center align-items-center">
+                                            <Spinner animation="border" variant="secondary" />
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
                     }
                 </Table>
             </div>

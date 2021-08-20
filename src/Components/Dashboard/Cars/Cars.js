@@ -69,11 +69,15 @@ const Cars = () => {
                                     allCars.map((car, index) => <RowOfCar key={index} car={car} index={index} handleRemove={handleRemove} ></RowOfCar>)
                                 }
                             </tbody>
-                            : <td colspan="9" borderless="true">
-                                <div className="w-100 py-4 d-flex justify-content-center align-items-center">
-                                    <Spinner animation="border" variant="secondary" />
-                                </div>
-                            </td>
+                            : <tbody>
+                                <tr>
+                                    <td colSpan="9" borderless="true">
+                                        <div className="w-100 py-4 d-flex justify-content-center align-items-center">
+                                            <Spinner animation="border" variant="secondary" />
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
                     }
                 </Table>
             </div>
