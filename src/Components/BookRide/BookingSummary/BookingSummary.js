@@ -10,7 +10,7 @@ import { useEffect } from 'react';
 const BookingSummary = ({ summaryShow, setSummaryShow }) => {
 
     const [bookingInfo, setBookingInfo] = useContext(bookingContext);
-    
+
     useEffect(() => {
         const retrievedObject = JSON.parse(localStorage.getItem('bookingInfo'));
         if (retrievedObject) {
@@ -22,7 +22,7 @@ const BookingSummary = ({ summaryShow, setSummaryShow }) => {
     // useEffect(() => {
     //     setSavedCar(bookingInfo.car);
     // }, [bookingInfo])
-    console.log(bookingInfo.distanceResponse.distance);
+    // console.log(bookingInfo.distanceResponse.distance);
 
     return (
         <div>

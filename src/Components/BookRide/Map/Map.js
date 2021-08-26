@@ -34,7 +34,7 @@ const Map = () => {
             updateDistance.car = [];
             setBookingInfo(updateDistance);
             localStorage.setItem('bookingInfo', JSON.stringify(updateDistance));
-            console.log(bookingInfo);
+            // console.log(bookingInfo);
             // console.log(bookingInfo.distanceResponse)
         }
     }, [distanceMatrixResponse])

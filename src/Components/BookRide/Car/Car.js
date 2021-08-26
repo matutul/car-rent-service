@@ -7,7 +7,7 @@ import { bookingContext } from '../BookRide/BookRide';
 const Car = ({ car }) => {
     const [bookingInfo, setBookingInfo] = useContext(bookingContext);
 
-    console.log(bookingInfo);
+    // console.log(bookingInfo);
 
     const addCarToBookingInfo = () => {
 

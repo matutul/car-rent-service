@@ -42,7 +42,7 @@ const BookingForm = ({ summaryShow, setSummaryShow }) => {
         else {
             const newBookingInfo = { ...bookingInfo, ...data, totalDays }
             setBookingInfo(newBookingInfo);
-            console.log(bookingInfo);
+            // console.log(bookingInfo);
             // localStorage.setItem("bookingInfo", JSON.stringify(newBookingInfo));
             setSummaryShow(true);
         }
@@ -81,7 +81,7 @@ const BookingForm = ({ summaryShow, setSummaryShow }) => {
         // updateUpdown.car = [];
         setBookingInfo(updateUpdown);
         localStorage.setItem('bookingInfo', JSON.stringify(updateUpdown));
-        console.log(bookingInfo);
+        // console.log(bookingInfo);
     }
 
 
