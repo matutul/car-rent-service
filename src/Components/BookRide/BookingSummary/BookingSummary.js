@@ -5,15 +5,24 @@ import { Table } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import './BookingSummary.css';
+import { useEffect } from 'react';
 
 const BookingSummary = ({ summaryShow, setSummaryShow }) => {
 
-    const [bookingInfo,] = useContext(bookingContext);
+    const [bookingInfo, setBookingInfo] = useContext(bookingContext);
+    
+    useEffect(() => {
+        const retrievedObject = JSON.parse(localStorage.getItem('bookingInfo'));
+        if (retrievedObject) {
+            setBookingInfo(retrievedObject);
+        }
+    }, [])
     // const [savedCar, setSavedCar] = useState(bookingInfo.car || {});
 
     // useEffect(() => {
     //     setSavedCar(bookingInfo.car);
     // }, [bookingInfo])
+    console.log(bookingInfo.distanceResponse.distance);
 
     return (
         <div>

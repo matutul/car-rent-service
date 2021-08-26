@@ -20,10 +20,9 @@ const BookRide = () => {
     const [showLoading, setShowLoading] = useState(true);
 
 
-    useEffect(() => {
 
+    useEffect(() => {
         const retrievedObject = JSON.parse(localStorage.getItem('bookingInfo'));
-        // console.log('retrievedObject: ', retrievedObject);
         if (retrievedObject) {
             setBookingInfo(retrievedObject);
         }
@@ -37,7 +36,6 @@ const BookRide = () => {
                 setShowLoading(false);
             })
     }, [])
-    // console.log(bookingInfo);
     return (
         <bookingContext.Provider value={[bookingInfo, setBookingInfo]}>
             <NavbarUpper></NavbarUpper>
@@ -49,9 +47,9 @@ const BookRide = () => {
 
             <div className="container">
 
-                <div style={{ backgroundColor: 'rgba(250, 250, 250, 0.8)' }} className="progressbar mt-5 p-4 shadow">
+                {/* <div style={{ backgroundColor: 'rgba(250, 250, 250, 0.8)' }} className="progressbar mt-5 p-4 shadow">
                     <ProgressBar className="my-2" now={45} />
-                </div>
+                </div> */}
 
                 <div className="row booking-section w-100 mt-3 mb-5 mx-auto">
                     <div className="col-md-5 my-4">
@@ -59,17 +57,6 @@ const BookRide = () => {
                             {
                                 summaryShow ? <BookingSummary summaryShow={summaryShow} setSummaryShow={setSummaryShow}></BookingSummary> : <BookingForm summaryShow={summaryShow} setSummaryShow={setSummaryShow}></BookingForm>
                             }
-                            {/* {
-                                (bookingInfo.car) && <div className="mt-5">
-                                    <h4>Selected Car:</h4>
-                                    {
-                                        bookingInfo.car?.map((car, index) => <AddedCar key={index} car={car}></AddedCar>)
-                                    }
-                                </div>
-                            }
-                            {
-                                bookingInfo.distanceResponse && bookingInfo.car && <Button className="w-100">Submit for Booking</Button>
-                            } */}
                         </div>
                         {
                             (bookingInfo.car?.length > 0) &&
@@ -93,6 +80,31 @@ const BookRide = () => {
                         }
                     </div>
                     <div className="col-md-7 my-4 w-100">
+                        {/* {
+                            bookingInfo.car?.length > 0 && (<div>
+                                <div className="bookingInformationTitle d-flex justify-content-center align-items-center text-center shadow mb-3 p-2">
+                                    <h4>Total Cars: {bookingInfo.car?.length}</h4>
+                                </div>
+                                <div className="cart">
+                                    <Table>
+                                        <tbody>
+                                            <tr className="my-0 py-0" style={{ fontSize: '1rem' }}>
+                                                <td className="td p-0" scope="col">Total Rent:</td>
+                                                <td className="td p-0">{(bookingInfo.cart?.totalRent).toFixed(2)} &#2547;</td>
+                                            </tr>
+                                            <tr className="my-0 py-0" style={{ fontSize: '1rem' }}>
+                                                <td className="td p-0" scope="col">Total Kilometer Charge:</td>
+                                                <td className="td p-0">{(bookingInfo.cart?.totalPrice).toFixed(2)} &#2547;</td>
+                                            </tr>
+                                            <tr className="my-0 py-0" style={{ fontSize: '1rem' }}>
+                                                <td className="td p-0" scope="col">Total:</td>
+                                                <td className="td p-0">{Math.floor(bookingInfo.cart?.totalCharge)} &#2547;</td>
+                                            </tr>
+                                        </tbody>
+                                    </Table>
+                                </div>
+                            </div>)
+                        } */}
                         {
                             summaryShow ? <>
                                 <div className="text-center w-100 p-3 mb-2 mx-auto shadow">

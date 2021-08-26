@@ -4,6 +4,7 @@ import 'react-calendar/dist/Calendar.css';
 import { useContext, useEffect } from 'react';
 import { bookingContext } from '../BookRide/BookRide';
 import { UserContext } from '../../../App';
+import './BookingForm.css';
 // import { useState } from 'react';
 
 const BookingForm = ({ summaryShow, setSummaryShow }) => {
@@ -41,8 +42,8 @@ const BookingForm = ({ summaryShow, setSummaryShow }) => {
         else {
             const newBookingInfo = { ...bookingInfo, ...data, totalDays }
             setBookingInfo(newBookingInfo);
-
-            localStorage.setItem("bookingInfo", JSON.stringify(newBookingInfo));
+            console.log(bookingInfo);
+            // localStorage.setItem("bookingInfo", JSON.stringify(newBookingInfo));
             setSummaryShow(true);
         }
     };
@@ -63,14 +64,32 @@ const BookingForm = ({ summaryShow, setSummaryShow }) => {
 
     const handleCheckBoxClick = () => {
         const updateUpdown = { ...bookingInfo };
-        updateUpdown.updown = !bookingInfo.updown;
-        updateUpdown.car = [];
+        const isUpdown = updateUpdown.updown;
+        if (isUpdown) {
+            updateUpdown.updown = false;
+            updateUpdown.car?.forEach(car => {
+                car.totalPrice *= 0.5;
+            })
+        }
+        if (!isUpdown) {
+            updateUpdown.updown = true;
+            updateUpdown.car?.forEach(car => {
+                car.totalPrice *= 2;
+            })
+        }
+        // updateUpdown.updown = !bookingInfo.updown;
+        // updateUpdown.car = [];
         setBookingInfo(updateUpdown);
+        localStorage.setItem('bookingInfo', JSON.stringify(updateUpdown));
+        console.log(bookingInfo);
     }
 
 
     return (
         <>
+            <div className="bookingInformationTitle d-flex justify-content-center align-items-center text-center shadow mb-3 p-2">
+                <h4>Booking Information</h4>
+            </div>
             <form className="w-100" onSubmit={handleSubmit(onSubmit)}>
                 {/* register your input into the hook by invoking the "register" function */}
 
@@ -97,18 +116,21 @@ const BookingForm = ({ summaryShow, setSummaryShow }) => {
                         onClick={handleCheckBoxClick}
                         type="checkbox"
                     />
-                    Updown
+                    UpDown <span>(যাওয়া-আসা)</span>
                 </label>
 
                 {
-                    (bookingInfo.distanceResponse && bookingInfo?.distanceResponse?.status !== "NOT_FOUND") && <div className="row my-3">
-                        <div className="col-6">
-                            <label className="mb-0">Distance:</label>
-                            <input className="w-100 py-1 px-3 form-control" defaultValue={bookingInfo?.distanceResponse?.distance?.text} placeholder="Distance" disabled={true} />
-                        </div>
-                        <div className="col-6">
-                            <label className="mb-0">Possible time:</label>
-                            <input className="w-100 py-1 px-3 form-control" defaultValue={bookingInfo?.distanceResponse?.duration?.text} placeholder="Possible time" disabled={true} />
+                    (bookingInfo.distanceResponse && bookingInfo?.distanceResponse?.status !== "NOT_FOUND") && <div className="my-3 p-2 distanceInformation shadow">
+                        <p className="mb-0">শুধু যাওয়া ঃ</p>
+                        <div className="row mt-0 w-100 mx-auto">
+                            <div className="col-6">
+                                <label className="mb-0">Distance:</label>
+                                <input className="w-100 py-1 px-3 form-control oneWayInfomation" defaultValue={bookingInfo?.distanceResponse?.distance?.text} placeholder="Distance" disabled={true} />
+                            </div>
+                            <div className="col-6">
+                                <label className="mb-0">Possible time:</label>
+                                <input className="w-100 py-1 px-3 form-control oneWayInfomation" defaultValue={bookingInfo?.distanceResponse?.duration?.text} placeholder="Possible time" disabled={true} />
+                            </div>
                         </div>
                     </div>
                 }

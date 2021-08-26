@@ -31,8 +31,10 @@ const Map = () => {
             const updateDistance = { ...bookingInfo };
             // console.log("from map: " + updateDistance);
             updateDistance.distanceResponse = distanceMatrixResponse;
-            localStorage.setItem('bookingInfo', JSON.stringify(updateDistance));
+            updateDistance.car = [];
             setBookingInfo(updateDistance);
+            localStorage.setItem('bookingInfo', JSON.stringify(updateDistance));
+            console.log(bookingInfo);
             // console.log(bookingInfo.distanceResponse)
         }
     }, [distanceMatrixResponse])

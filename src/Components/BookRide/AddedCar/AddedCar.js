@@ -38,9 +38,6 @@ const AddedCar = ({ car }) => {
                         </tr>
                     </tbody>
                 </Table>
-                {/* <p>Rent: {(car.totalPrice).toFixed(2)}</p>
-                <p>Kilometer charge: {(car.totalPrice).toFixed(2)}</p>
-                <p>Total: {Math.floor(car.totalCharge)}</p> */}
             </div>
             <div className="action">
                 <FontAwesomeIcon className="minusButton float-right m-2 text-warning" icon={faMinusCircle} onClick={() => handleRemove(car._id)} />
