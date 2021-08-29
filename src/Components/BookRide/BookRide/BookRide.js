@@ -12,6 +12,7 @@ import NavbarMain from '../../Shared/Navbar/NavbarMain/NavbarMain';
 import AddedCar from '../AddedCar/AddedCar';
 
 export const bookingContext = createContext();
+// export default bookingContext;
 
 const BookRide = () => {
     const [cars, setCars] = useState([]);

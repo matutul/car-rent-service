@@ -1,35 +1,37 @@
-import React from 'react';
-import { useForm } from "react-hook-form";
-import 'react-calendar/dist/Calendar.css';
+import React, { useState } from 'react';
 import { useContext, useEffect } from 'react';
 import { bookingContext } from '../BookRide/BookRide';
 import { UserContext } from '../../../App';
+import { useForm } from "react-hook-form";
 import './BookingForm.css';
-// import { useState } from 'react';
+
+
+
 
 const BookingForm = ({ summaryShow, setSummaryShow }) => {
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const [loggedinUser, setLoggedinUser] = useContext(UserContext);
     const [bookingInfo, setBookingInfo] = useContext(bookingContext);
+    const [updownDistance, setUpdownDistance] = useState({});
 
-    // useEffect(() => {
-    //     reset(bookingInfo);
-    // }, [reset])
+    console.log(bookingInfo);
+
 
     useEffect(() => {
-        const savedBookingInfo = JSON.parse(window.localStorage.getItem('bookingInfo')) || {};
+        const savedBookingInfo = JSON.parse(window.localStorage.getItem('bookingInfo'));
         if (savedBookingInfo) {
             setBookingInfo(savedBookingInfo);
         }
-    }, [])
+    }, [bookingInfo.updown])
 
     useEffect(() => {
         reset(bookingInfo);
     }, [reset])
 
+
     const onSubmit = data => {
-        // console.log(data);
+        console.log("booking info after clicking next:", bookingInfo);
         const startDate = new Date(data.pickDate);
         const endDate = new Date(data.dropDate);
         const totalDuration = endDate.getTime() - startDate.getTime();
@@ -42,8 +44,9 @@ const BookingForm = ({ summaryShow, setSummaryShow }) => {
         else {
             const newBookingInfo = { ...bookingInfo, ...data, totalDays }
             setBookingInfo(newBookingInfo);
-            // console.log(bookingInfo);
-            // localStorage.setItem("bookingInfo", JSON.stringify(newBookingInfo));
+            console.log("booking info after clicking next and updating bookingInfo state:", newBookingInfo);
+            console.log("booking info after clicking next and updating bookingInfo state:", bookingInfo);
+            localStorage.setItem("bookingInfo", JSON.stringify(bookingInfo));
             setSummaryShow(true);
         }
     };
@@ -62,26 +65,46 @@ const BookingForm = ({ summaryShow, setSummaryShow }) => {
         // console.log(bookingInfo);
     }
 
-    const handleCheckBoxClick = () => {
-        const updateUpdown = { ...bookingInfo };
-        const isUpdown = updateUpdown.updown;
-        if (isUpdown) {
-            updateUpdown.updown = false;
-            updateUpdown.car?.forEach(car => {
-                car.totalPrice *= 0.5;
-            })
-        }
-        if (!isUpdown) {
+    const handleCheckBoxClick = (e) => {
+        if (e.target.name === 'updown') {
+            const updateUpdown = { ...bookingInfo };
             updateUpdown.updown = true;
             updateUpdown.car?.forEach(car => {
                 car.totalPrice *= 2;
             })
+            if (updateUpdown.distanceResponse?.status === "OK") {
+                const distanceInResponse = updateUpdown.distanceResponse;
+                const distanceOfUpdown = {
+                    distance: {
+                        text: `${((distanceInResponse.distance.value * 2) / 1000).toFixed(2)} km`,
+                        value: distanceInResponse.distance.value * 2
+                    },
+                    duration: {
+                        text: `${((distanceInResponse.duration.value * 2) / (60 * 60)).toFixed(0)} hours ${Math.ceil((((distanceInResponse.duration.value * 2) % (60 * 60)) / 60))} mins`,
+                        value: distanceInResponse.duration.value * 2
+                    }
+                }
+                updateUpdown.updownDistance = distanceOfUpdown;
+            }
+            setBookingInfo(updateUpdown);
+            localStorage.setItem('bookingInfo', JSON.stringify(updateUpdown));
         }
-        // updateUpdown.updown = !bookingInfo.updown;
-        // updateUpdown.car = [];
-        setBookingInfo(updateUpdown);
-        localStorage.setItem('bookingInfo', JSON.stringify(updateUpdown));
-        // console.log(bookingInfo);
+
+
+        if (e.target.name === 'oneWay') {
+            const updateUpdown = { ...bookingInfo };
+
+            updateUpdown.updown = false;
+            updateUpdown.car?.forEach(car => {
+                car.totalPrice *= 0.5;
+            })
+            if (updateUpdown.updownDistance) {
+                delete updateUpdown.updownDistance;
+            }
+            setBookingInfo(updateUpdown);
+            localStorage.setItem('bookingInfo', JSON.stringify(updateUpdown));
+        }
+        console.log(bookingInfo);
     }
 
 
@@ -106,12 +129,24 @@ const BookingForm = ({ summaryShow, setSummaryShow }) => {
                 <input className="w-100 my-2 py-1 px-3 form-control" placeholder="End Destination" defaultValue={bookingInfo?.end} {...register("end", { required: true })} onChange={handleOnChange} />
                 {errors.end && <p className="text-warning">This is field is required</p>}
 
+                <label className="my-2 mr-3">
+                    <input
+                        className="mr-2"
+                        {...register("oneWay")}
+                        name="oneWay"
+                        // value={true}
+                        checked={!bookingInfo.updown}
+                        onClick={handleCheckBoxClick}
+                        type="checkbox"
+                    />
+                    One way <span>(শুধু যাওয়া)</span>
+                </label>
                 <label className="my-2">
                     <input
                         className="mr-2"
                         {...register("updown")}
                         name="updown"
-                        value={true}
+                        // value={true}
                         checked={bookingInfo.updown}
                         onClick={handleCheckBoxClick}
                         type="checkbox"
@@ -121,15 +156,15 @@ const BookingForm = ({ summaryShow, setSummaryShow }) => {
 
                 {
                     (bookingInfo.distanceResponse && bookingInfo?.distanceResponse?.status !== "NOT_FOUND") && <div className="my-3 p-2 distanceInformation shadow">
-                        <p className="mb-0">শুধু যাওয়া ঃ</p>
+                        <p className="mb-0">{bookingInfo.updown ? "যাওয়া-আসাঃ" : "শুধু যাওয়াঃ"} </p>
                         <div className="row mt-0 w-100 mx-auto">
                             <div className="col-6">
                                 <label className="mb-0">Distance:</label>
-                                <input className="w-100 py-1 px-3 form-control oneWayInfomation" defaultValue={bookingInfo?.distanceResponse?.distance?.text} placeholder="Distance" disabled={true} />
+                                <p className="w-100 py-1 px-3 form-control oneWayInfomation">{bookingInfo.updownDistance ? bookingInfo.updownDistance?.distance?.text : bookingInfo?.distanceResponse?.distance?.text}</p>
                             </div>
                             <div className="col-6">
                                 <label className="mb-0">Possible time:</label>
-                                <input className="w-100 py-1 px-3 form-control oneWayInfomation" defaultValue={bookingInfo?.distanceResponse?.duration?.text} placeholder="Possible time" disabled={true} />
+                                <p className="w-100 py-1 px-3 form-control oneWayInfomation">{bookingInfo.updownDistance ? bookingInfo.updownDistance?.duration?.text : bookingInfo?.distanceResponse?.duration?.text}</p>
                             </div>
                         </div>
                     </div>
@@ -140,12 +175,12 @@ const BookingForm = ({ summaryShow, setSummaryShow }) => {
                     <div className="col-6">
                         <label className="mb-0" htmlFor="pickDate">Pick up date:</label>
                         <input className="w-100 my-2 py-1 px-3 form-control" defaultValue={bookingInfo?.pickDate} type="date" placeholder="Pick up date" {...register("pickDate", { required: true })} />
-                        {errors.pickDate && <p className="text-warning">This is field is required</p>}
+                        {errors.pickDate && <p className="text-warning">This field is required</p>}
                     </div>
                     <div className="col-6">
                         <label className="mb-0" htmlFor="dropDate">Drop off date:</label>
-                        <input className="w-100 my-2 py-1 px-3 form-control" defaultValue={bookingInfo?.dropDate} type="date" placeholder="Pick up date" {...register("dropDate", { required: true })} />
-                        {errors.dropDate && <p className="text-warning">This is field is required</p>}
+                        <input className="w-100 my-2 py-1 px-3 form-control" defaultValue={bookingInfo?.dropDate} type="date" placeholder="Drop off date" {...register("dropDate", { required: true })} />
+                        {errors.dropDate && <p className="text-warning">This field is required</p>}
                     </div>
 
                 </div>

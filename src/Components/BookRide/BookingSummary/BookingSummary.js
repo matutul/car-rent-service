@@ -11,19 +11,19 @@ const BookingSummary = ({ summaryShow, setSummaryShow }) => {
 
     const [bookingInfo, setBookingInfo] = useContext(bookingContext);
 
-    useEffect(() => {
-        const retrievedObject = JSON.parse(localStorage.getItem('bookingInfo'));
-        if (retrievedObject) {
-            setBookingInfo(retrievedObject);
-        }
-    }, [])
+    // useEffect(() => {
+    //     const retrievedObject = JSON.parse(localStorage.getItem('bookingInfo'));
+    //     if (retrievedObject) {
+    //         setBookingInfo(retrievedObject);
+    //     }
+    // }, [])
     // const [savedCar, setSavedCar] = useState(bookingInfo.car || {});
 
     // useEffect(() => {
     //     setSavedCar(bookingInfo.car);
     // }, [bookingInfo])
     // console.log(bookingInfo.distanceResponse.distance);
-
+    console.log(bookingInfo);
     return (
         <div>
             <div className="bookingInformationTitle d-flex justify-content-center align-items-center text-center shadow mb-3 p-2">
@@ -52,11 +52,11 @@ const BookingSummary = ({ summaryShow, setSummaryShow }) => {
                     </tr>
                     <tr>
                         <td scope="col">Distance</td>
-                        <td>{bookingInfo.distanceResponse?.distance?.text}</td>
+                        <td>{bookingInfo.updownDistance ? bookingInfo.updownDistance?.distance?.text : bookingInfo?.distanceResponse?.distance?.text}</td>
                     </tr>
                     <tr>
                         <td scope="col">Duration</td>
-                        <td>{bookingInfo.distanceResponse?.duration?.text}</td>
+                        <td>{bookingInfo.updownDistance ? bookingInfo.updownDistance?.duration?.text : bookingInfo?.distanceResponse?.duration?.text}</td>
                     </tr>
                     <tr>
                         <td scope="col">Pick Date</td>
