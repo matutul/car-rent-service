@@ -1,0 +1,14 @@
+.paymentSection{
+    min-height: calc(100vh - 140px);
+}
+.priceBox{
+    border-radius: 20px;
+    background-color: white;
+    position: sticky;
+    top: 100px;
+}
+.totalPrice{
+    border-radius: 20px;
+    background-color: rgb(26, 154, 228);
+    color: white;
+}

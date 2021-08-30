@@ -1,15 +1,18 @@
 import React, { createContext, useEffect } from 'react';
+import { useState } from 'react';
 import Footer from '../../Shared/Footer/Footer';
 import './BookRide.css';
 import BookingForm from '../BookingForm/BookingForm';
 import Map from '../Map/Map';
-import { useState } from 'react';
 import Car from '../Car/Car';
 import BookingSummary from '../BookingSummary/BookingSummary';
-import { Button, ProgressBar, Spinner } from 'react-bootstrap';
+import { Button, Spinner } from 'react-bootstrap';
 import NavbarUpper from '../../Shared/Navbar/NavbarUpper/NavbarUpper';
 import NavbarMain from '../../Shared/Navbar/NavbarMain/NavbarMain';
 import AddedCar from '../AddedCar/AddedCar';
+import { useHistory } from 'react-router-dom';
+import { useContext } from 'react';
+import { UserContext } from './../../../App';
 
 export const bookingContext = createContext();
 // export default bookingContext;
@@ -19,13 +22,15 @@ const BookRide = () => {
     const [bookingInfo, setBookingInfo] = useState({});
     const [summaryShow, setSummaryShow] = useState(false);
     const [showLoading, setShowLoading] = useState(true);
-
-
+    // const [priceCart, setPriceCart] = useState(null);
+    const [loggediInUser, setLoggedinUser] = useContext(UserContext);
+    const history = useHistory();
 
     useEffect(() => {
         const retrievedObject = JSON.parse(localStorage.getItem('bookingInfo'));
         if (retrievedObject) {
             setBookingInfo(retrievedObject);
+            localStorage.removeItem('bookingInfo');
         }
     }, [])
 
@@ -37,6 +42,40 @@ const BookRide = () => {
                 setShowLoading(false);
             })
     }, [])
+
+    const proceedToBook = () => {
+        let rentSumOfAllCar = 0.00;
+        let kiloPriceSumOfAllCar = 0.00;
+        let totalSumOfAllCar = 0.00;
+        for (let i = 0; i < bookingInfo.car?.length; i++) {
+            rentSumOfAllCar += bookingInfo.car[i].totalRent;
+            kiloPriceSumOfAllCar += bookingInfo.car[i].totalPrice;
+            totalSumOfAllCar += bookingInfo.car[i].totalCharge;
+            console.log(rentSumOfAllCar, kiloPriceSumOfAllCar, totalSumOfAllCar);
+        }
+        const cart = {
+            rent: rentSumOfAllCar,
+            kiloPrice: kiloPriceSumOfAllCar,
+            total: totalSumOfAllCar
+        }
+        const updatePriceCart = { cart, ...bookingInfo };
+        setBookingInfo(updatePriceCart);
+        localStorage.setItem('bookingInfo', JSON.stringify(updatePriceCart));
+
+        const addBookingInfoToLogginUser = { ...loggediInUser };
+        addBookingInfoToLogginUser.bookingInfo = bookingInfo;
+        setLoggedinUser(addBookingInfoToLogginUser);
+        console.log(bookingInfo);
+        history.push('/payment')
+    }
+
+    // useEffect(() => {
+    //     if(bookingInfo.cart){
+    //         history.push('/payment');
+    //     }
+    // }, [bookingInfo.cart])
+    console.log(bookingInfo);
+
     return (
         <bookingContext.Provider value={[bookingInfo, setBookingInfo]}>
             <NavbarUpper></NavbarUpper>
@@ -75,14 +114,14 @@ const BookRide = () => {
                                 </div>
 
                                 {
-                                    bookingInfo.distanceResponse && bookingInfo.car && <Button className="w-100">Submit for Booking</Button>
+                                    bookingInfo.distanceResponse && bookingInfo.car && <Button className="w-100" onClick={proceedToBook}>Proceed for Booking</Button>
                                 }
                             </div>
                         }
                     </div>
                     <div className="col-md-7 my-4 w-100">
                         {/* {
-                            bookingInfo.car?.length > 0 && (<div>
+                            (bookingInfo.car?.length > 0 && cart) && (<div>
                                 <div className="bookingInformationTitle d-flex justify-content-center align-items-center text-center shadow mb-3 p-2">
                                     <h4>Total Cars: {bookingInfo.car?.length}</h4>
                                 </div>
@@ -91,15 +130,15 @@ const BookRide = () => {
                                         <tbody>
                                             <tr className="my-0 py-0" style={{ fontSize: '1rem' }}>
                                                 <td className="td p-0" scope="col">Total Rent:</td>
-                                                <td className="td p-0">{(bookingInfo.cart?.totalRent).toFixed(2)} &#2547;</td>
+                                                <td className="td p-0">{(bookingInfo.cart?.rentSumOfAllCar)?.toFixed(2)} &#2547;</td>
                                             </tr>
                                             <tr className="my-0 py-0" style={{ fontSize: '1rem' }}>
                                                 <td className="td p-0" scope="col">Total Kilometer Charge:</td>
-                                                <td className="td p-0">{(bookingInfo.cart?.totalPrice).toFixed(2)} &#2547;</td>
+                                                <td className="td p-0">{(bookingInfo.cart?.kiloPriceSumOfAllCar)?.toFixed(2)} &#2547;</td>
                                             </tr>
                                             <tr className="my-0 py-0" style={{ fontSize: '1rem' }}>
                                                 <td className="td p-0" scope="col">Total:</td>
-                                                <td className="td p-0">{Math.floor(bookingInfo.cart?.totalCharge)} &#2547;</td>
+                                                <td className="td p-0">{Math.floor(bookingInfo.cart?.totalSumOfAllCar)} &#2547;</td>
                                             </tr>
                                         </tbody>
                                     </Table>

@@ -19,6 +19,7 @@ import {
   useLocation,
   useHistory
 } from "react-router-dom";
+import Payment from './Components/BookRide/Payment/Payment';
 
 
 
@@ -74,6 +75,9 @@ function App() {
           </PrivateRoute>
           <PrivateRoute exact path='/dashboard'>
             <Dashboard />
+          </PrivateRoute>
+          <PrivateRoute path='/payment'>
+            <Payment />
           </PrivateRoute>
 
 

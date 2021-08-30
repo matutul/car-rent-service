@@ -26,16 +26,12 @@ const Map = () => {
 
     useEffect(() => {
 
-        // localStorage.removeItem('bookingInfo');
         if (distanceMatrixResponse != null) {
             const updateDistance = { ...bookingInfo };
-            // console.log("from map: " + updateDistance);
             updateDistance.distanceResponse = distanceMatrixResponse;
             updateDistance.car = [];
             setBookingInfo(updateDistance);
             localStorage.setItem('bookingInfo', JSON.stringify(updateDistance));
-            // console.log(bookingInfo);
-            // console.log(bookingInfo.distanceResponse)
         }
     }, [distanceMatrixResponse])
 

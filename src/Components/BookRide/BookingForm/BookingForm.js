@@ -13,17 +13,6 @@ const BookingForm = ({ summaryShow, setSummaryShow }) => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const [loggedinUser, setLoggedinUser] = useContext(UserContext);
     const [bookingInfo, setBookingInfo] = useContext(bookingContext);
-    const [updownDistance, setUpdownDistance] = useState({});
-
-    console.log(bookingInfo);
-
-
-    useEffect(() => {
-        const savedBookingInfo = JSON.parse(window.localStorage.getItem('bookingInfo'));
-        if (savedBookingInfo) {
-            setBookingInfo(savedBookingInfo);
-        }
-    }, [bookingInfo.updown])
 
     useEffect(() => {
         reset(bookingInfo);
@@ -31,7 +20,9 @@ const BookingForm = ({ summaryShow, setSummaryShow }) => {
 
 
     const onSubmit = data => {
-        console.log("booking info after clicking next:", bookingInfo);
+        if(data.car?.length > 0) {
+            data.car = [];
+        }
         const startDate = new Date(data.pickDate);
         const endDate = new Date(data.dropDate);
         const totalDuration = endDate.getTime() - startDate.getTime();
@@ -42,11 +33,10 @@ const BookingForm = ({ summaryShow, setSummaryShow }) => {
             alert("Please fill with proper value such as more specific location.");
         }
         else {
-            const newBookingInfo = { ...bookingInfo, ...data, totalDays }
+            const newBookingInfo = { ...data, totalDays, ...bookingInfo }
             setBookingInfo(newBookingInfo);
-            console.log("booking info after clicking next and updating bookingInfo state:", newBookingInfo);
-            console.log("booking info after clicking next and updating bookingInfo state:", bookingInfo);
-            localStorage.setItem("bookingInfo", JSON.stringify(bookingInfo));
+            
+            localStorage.setItem("bookingInfo", JSON.stringify(newBookingInfo));
             setSummaryShow(true);
         }
     };
@@ -66,8 +56,8 @@ const BookingForm = ({ summaryShow, setSummaryShow }) => {
     }
 
     const handleCheckBoxClick = (e) => {
+        const updateUpdown = { ...bookingInfo };
         if (e.target.name === 'updown') {
-            const updateUpdown = { ...bookingInfo };
             updateUpdown.updown = true;
             updateUpdown.car?.forEach(car => {
                 car.totalPrice *= 2;
@@ -86,14 +76,9 @@ const BookingForm = ({ summaryShow, setSummaryShow }) => {
                 }
                 updateUpdown.updownDistance = distanceOfUpdown;
             }
-            setBookingInfo(updateUpdown);
-            localStorage.setItem('bookingInfo', JSON.stringify(updateUpdown));
         }
 
-
         if (e.target.name === 'oneWay') {
-            const updateUpdown = { ...bookingInfo };
-
             updateUpdown.updown = false;
             updateUpdown.car?.forEach(car => {
                 car.totalPrice *= 0.5;
@@ -101,10 +86,11 @@ const BookingForm = ({ summaryShow, setSummaryShow }) => {
             if (updateUpdown.updownDistance) {
                 delete updateUpdown.updownDistance;
             }
-            setBookingInfo(updateUpdown);
-            localStorage.setItem('bookingInfo', JSON.stringify(updateUpdown));
         }
-        console.log(bookingInfo);
+        setBookingInfo(updateUpdown);
+        localStorage.setItem('bookingInfo', JSON.stringify(updateUpdown));
+        // console.log(bookingInfo);
+        
     }
 
 
@@ -134,7 +120,7 @@ const BookingForm = ({ summaryShow, setSummaryShow }) => {
                         className="mr-2"
                         {...register("oneWay")}
                         name="oneWay"
-                        // value={true}
+                        value={true}
                         checked={!bookingInfo.updown}
                         onClick={handleCheckBoxClick}
                         type="checkbox"
@@ -146,7 +132,7 @@ const BookingForm = ({ summaryShow, setSummaryShow }) => {
                         className="mr-2"
                         {...register("updown")}
                         name="updown"
-                        // value={true}
+                        value={true}
                         checked={bookingInfo.updown}
                         onClick={handleCheckBoxClick}
                         type="checkbox"
@@ -157,32 +143,31 @@ const BookingForm = ({ summaryShow, setSummaryShow }) => {
                 {
                     (bookingInfo.distanceResponse && bookingInfo?.distanceResponse?.status !== "NOT_FOUND") && <div className="my-3 p-2 distanceInformation shadow">
                         <p className="mb-0">{bookingInfo.updown ? "যাওয়া-আসাঃ" : "শুধু যাওয়াঃ"} </p>
-                        <div className="row mt-0 w-100 mx-auto">
-                            <div className="col-6">
-                                <label className="mb-0">Distance:</label>
-                                <p className="w-100 py-1 px-3 form-control oneWayInfomation">{bookingInfo.updownDistance ? bookingInfo.updownDistance?.distance?.text : bookingInfo?.distanceResponse?.distance?.text}</p>
+                        {/* <div className="row mt-0 w-100 mx-auto"> */}
+                            <div className="col-12">
+                                {/* <label className="mb-0">Distance:</label> */}
+                                <p className="w-100 py-1 px-3 oneWayInfomation my-1">Distance: {(bookingInfo.updownDistance && bookingInfo.updown) ? bookingInfo.updownDistance?.distance?.text : bookingInfo?.distanceResponse?.distance?.text}</p>
                             </div>
-                            <div className="col-6">
-                                <label className="mb-0">Possible time:</label>
-                                <p className="w-100 py-1 px-3 form-control oneWayInfomation">{bookingInfo.updownDistance ? bookingInfo.updownDistance?.duration?.text : bookingInfo?.distanceResponse?.duration?.text}</p>
+                            <div className="col-12">
+                                {/* <label className="mb-0">Possible time:</label> */}
+                                <p className="w-100 py-1 px-3 oneWayInfomation my-1">Possible time: {(bookingInfo.updownDistance && bookingInfo.updown) ? bookingInfo.updownDistance?.duration?.text : bookingInfo?.distanceResponse?.duration?.text}</p>
                             </div>
-                        </div>
+                        {/* </div> */}
                     </div>
                 }
 
 
                 <div className="row">
-                    <div className="col-6">
+                    <div className="col-12">
                         <label className="mb-0" htmlFor="pickDate">Pick up date:</label>
                         <input className="w-100 my-2 py-1 px-3 form-control" defaultValue={bookingInfo?.pickDate} type="date" placeholder="Pick up date" {...register("pickDate", { required: true })} />
                         {errors.pickDate && <p className="text-warning">This field is required</p>}
                     </div>
-                    <div className="col-6">
+                    <div className="col-12">
                         <label className="mb-0" htmlFor="dropDate">Drop off date:</label>
                         <input className="w-100 my-2 py-1 px-3 form-control" defaultValue={bookingInfo?.dropDate} type="date" placeholder="Drop off date" {...register("dropDate", { required: true })} />
                         {errors.dropDate && <p className="text-warning">This field is required</p>}
                     </div>
-
                 </div>
                 <input className="w-100 my-2 btn btn-warning" type="submit" value="Next" />
             </form>
