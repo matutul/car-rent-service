@@ -19,7 +19,17 @@ export const bookingContext = createContext();
 
 const BookRide = () => {
     const [cars, setCars] = useState([]);
-    const [bookingInfo, setBookingInfo] = useState({});
+    const [bookingInfo, setBookingInfo] = useState({
+        data: {
+            name: '',
+            phone: '',
+            pickDate: '',
+            dropDate: '',
+            start: '',
+            end: '',
+            totalDays: 0
+        }
+    });
     const [summaryShow, setSummaryShow] = useState(false);
     const [showLoading, setShowLoading] = useState(true);
     // const [priceCart, setPriceCart] = useState(null);
@@ -58,7 +68,7 @@ const BookRide = () => {
             kiloPrice: kiloPriceSumOfAllCar,
             total: totalSumOfAllCar
         }
-        const updatePriceCart = { cart, ...bookingInfo };
+        const updatePriceCart = { ...bookingInfo, cart };
         setBookingInfo(updatePriceCart);
         localStorage.setItem('bookingInfo', JSON.stringify(updatePriceCart));
 
@@ -120,31 +130,6 @@ const BookRide = () => {
                         }
                     </div>
                     <div className="col-md-7 my-4 w-100">
-                        {/* {
-                            (bookingInfo.car?.length > 0 && cart) && (<div>
-                                <div className="bookingInformationTitle d-flex justify-content-center align-items-center text-center shadow mb-3 p-2">
-                                    <h4>Total Cars: {bookingInfo.car?.length}</h4>
-                                </div>
-                                <div className="cart">
-                                    <Table>
-                                        <tbody>
-                                            <tr className="my-0 py-0" style={{ fontSize: '1rem' }}>
-                                                <td className="td p-0" scope="col">Total Rent:</td>
-                                                <td className="td p-0">{(bookingInfo.cart?.rentSumOfAllCar)?.toFixed(2)} &#2547;</td>
-                                            </tr>
-                                            <tr className="my-0 py-0" style={{ fontSize: '1rem' }}>
-                                                <td className="td p-0" scope="col">Total Kilometer Charge:</td>
-                                                <td className="td p-0">{(bookingInfo.cart?.kiloPriceSumOfAllCar)?.toFixed(2)} &#2547;</td>
-                                            </tr>
-                                            <tr className="my-0 py-0" style={{ fontSize: '1rem' }}>
-                                                <td className="td p-0" scope="col">Total:</td>
-                                                <td className="td p-0">{Math.floor(bookingInfo.cart?.totalSumOfAllCar)} &#2547;</td>
-                                            </tr>
-                                        </tbody>
-                                    </Table>
-                                </div>
-                            </div>)
-                        } */}
                         {
                             summaryShow ? <>
                                 <div className="text-center w-100 p-3 mb-2 mx-auto shadow">

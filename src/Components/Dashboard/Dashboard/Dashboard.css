@@ -9,7 +9,8 @@
     color: gray !important;
     border-right: 1px solid rgb(218, 218, 218);
 }
-.side-bar-link{
+.side-bar-link,
+.dropDown-link{
     width: 100%;
     color: rgb(126, 126, 126) !important;
     border-radius: 7px;
@@ -20,10 +21,21 @@
     transform: translateX(5px);
     background-color: rgb(235, 235, 235) !important;
 }
-.side-bar-link:hover{
+.side-bar-link:hover,
+.dropDown-link:hover{
     color: rgb(82, 82, 82) !important;
     transform: translateX(5px);
     background-color: rgb(235, 235, 235) !important;
+}
+.dropDown-link-active{
+    color: rgb(58, 58, 58) !important;
+    /* transform: translateX(5px); */
+    background-color: rgb(206, 206, 206) !important;
+}
+.dropDown-link-active:hover{
+    color: rgb(58, 58, 58) !important;
+    /* transform: translateX(5px); */
+    background-color: rgb(206, 206, 206) !important;
 }
 /* .logOutButton{
     border: 1px solid red;
@@ -36,4 +48,9 @@
 .shadow{
     -webkit-box-shadow: 3px 3px 16px 2px rgba(102,102,102,0.64); 
     box-shadow: 3px 3px 16px 2px rgba(102,102,102,0.64);
+}
+.dropDownContainer{
+    /* background-color: rgb(245, 245, 245); */
+    transform: translateX(15px);
+    border-left: 3px solid gray;
 }

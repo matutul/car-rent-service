@@ -23,19 +23,19 @@ const BookingSummary = ({ summaryShow, setSummaryShow }) => {
                 <tbody>
                     <tr>
                         <td scope="col">Name</td>
-                        <td>{bookingInfo.name}</td>
+                        <td>{bookingInfo.data.name}</td>
                     </tr>
                     <tr>
                         <td scope="col">Phone</td>
-                        <td>{bookingInfo.phone}</td>
+                        <td>{bookingInfo.data.phone}</td>
                     </tr>
                     <tr>
                         <td scope="col">Origin</td>
-                        <td>{bookingInfo.start}</td>
+                        <td>{bookingInfo.data.start}</td>
                     </tr>
                     <tr>
                         <td scope="col">Destination</td>
-                        <td>{bookingInfo.end}</td>
+                        <td>{bookingInfo.data.end}</td>
                     </tr>
                     <tr>
                         <td scope="col">Distance</td>
@@ -47,15 +47,15 @@ const BookingSummary = ({ summaryShow, setSummaryShow }) => {
                     </tr>
                     <tr>
                         <td scope="col">Pick Date</td>
-                        <td>{bookingInfo.pickDate}</td>
+                        <td>{bookingInfo.data.pickDate}</td>
                     </tr>
                     <tr>
                         <td scope="col">Drop Date</td>
-                        <td>{bookingInfo.dropDate}</td>
+                        <td>{bookingInfo.data.dropDate}</td>
                     </tr>
                     <tr>
                         <td scope="col">Total Days</td>
-                        <td>{bookingInfo.totalDays}</td>
+                        <td>{bookingInfo.data.totalDays}</td>
                     </tr>
                 </tbody>
             </Table>

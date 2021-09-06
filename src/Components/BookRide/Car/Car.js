@@ -14,7 +14,7 @@ const Car = ({ car }) => {
         //Charge for this car based on the given basic booking information
         const dayRent = parseFloat(car.rent);
         const kiloPrice = parseFloat(car.price);
-        const days = bookingInfo.totalDays;
+        const days = bookingInfo.data.totalDays;
         let totalKilos = bookingInfo.distanceResponse.distance.value / 1000;
 
         if (bookingInfo.updown) {

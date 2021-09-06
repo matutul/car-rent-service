@@ -10,7 +10,7 @@ const BookARide = () => {
     const history = useHistory();
     const onSubmit = data => {
         // console.log(data);
-        localStorage.setItem('bookingInfo', JSON.stringify(data));
+        localStorage.setItem('bookingInfo', JSON.stringify({data}));
         history.push('/book');
     };
 

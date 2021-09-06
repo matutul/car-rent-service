@@ -38,7 +38,7 @@ const Map = () => {
     useEffect(() => {
         setDirectionResponse(null);
         setDistanceMatrixResponse(null);
-    }, [bookingInfo?.start, bookingInfo?.end])
+    }, [bookingInfo?.data?.start, bookingInfo?.data?.end])
 
     return (
         <LoadScript
@@ -51,12 +51,12 @@ const Map = () => {
                 className="map"
             >
                 {
-                    (directionResponse == null) && (bookingInfo.start && bookingInfo.end) && (
+                    (directionResponse == null) && (bookingInfo?.data?.start && bookingInfo?.data?.end) && (
                         <DirectionsService
                             // required
                             options={{
-                                destination: bookingInfo?.end,
-                                origin: bookingInfo?.start,
+                                destination: bookingInfo?.data?.end,
+                                origin: bookingInfo?.data?.start,
                                 travelMode: "DRIVING"
                             }}
                             // required
@@ -71,11 +71,11 @@ const Map = () => {
 
 
                 {
-                    (distanceMatrixResponse == null) && (bookingInfo.start && bookingInfo.end) && (
+                    (distanceMatrixResponse == null) && (bookingInfo?.data?.start && bookingInfo?.data?.end) && (
                         <DistanceMatrixService
                             options={{
-                                destinations: [bookingInfo?.end],
-                                origins: [bookingInfo?.start],
+                                destinations: [bookingInfo?.data?.end],
+                                origins: [bookingInfo?.data?.start],
                                 travelMode: "DRIVING"
                             }}
                             callback={res => {
