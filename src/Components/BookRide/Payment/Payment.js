@@ -10,23 +10,23 @@ import { Button, Table } from 'react-bootstrap';
 import { useForm } from "react-hook-form";
 import { useContext } from 'react';
 import CarInPayment from './CarInPayment/CarInPayment';
+import { useHistory } from 'react-router-dom';
 
 const Payment = () => {
     const [loggedinUser, setLoggedinUser] = useContext(UserContext);
     const [carBookingInfo, setCarBookingInfo] = useState(null);
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
-
+    const history = useHistory();
 
     const onSubmit = data => {
-        console.log(data);
         const dataForPayment = {
             total_amount: Math.ceil(carBookingInfo.cart.total),
             currency: 'BDT',
             tran_id: `REF${carBookingInfo.data.phone}`, // use unique tran_id for each api call
-            success_url: 'http://localhost:3030/success',
-            fail_url: 'http://localhost:3030/fail',
-            cancel_url: 'http://localhost:3030/cancel',
-            ipn_url: 'http://localhost:3030/ipn',
+            success_url: 'https://rocky-waters-70556.herokuapp.com/success',
+            fail_url: 'https://rocky-waters-70556.herokuapp.com/fail',
+            cancel_url: 'https://rocky-waters-70556.herokuapp.com/cancel',
+            ipn_url: 'https://rocky-waters-70556.herokuapp.com/ipn',
             shipping_method: 'Rent',
             product_name: 'Car rent',
             product_category: 'Electronic',
@@ -49,17 +49,36 @@ const Payment = () => {
             ship_postcode: data.postCode,
             ship_country: 'Bangladesh',
         };
-        
-        fetch('http://localhost:3030/ssl-request', {
+        fetch('https://rocky-waters-70556.herokuapp.com/ssl-request', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': 'https://mollarentalservice.com'
+            },
             body: JSON.stringify(dataForPayment)
         })
-        .then(res => res.json())
-        .then(result => {
-            console.log(result);
-            alert(result);
-        })
+            .then(res => res.json())
+            .then(result => {
+                console.log(result);
+                alert(result);
+            })
+        if (carBookingInfo.car?.length > 0 && carBookingInfo.cart) {
+            fetch('https://rocky-waters-70556.herokuapp.com/addOrder', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({...carBookingInfo, paymentAddress: data})
+            })
+            .then(res => res.json())
+            .then(result => {
+                if(result){
+                    alert("Congrats!, The order is placed successfully!");
+                    localStorage.removeItem('bookingInfo');
+                    history.push('/book')
+                }
+            })
+        }
     }
 
 
@@ -148,7 +167,7 @@ const Payment = () => {
                             <Button type="submit" disabled={!carBookingInfo?.car?.length}>Pay to Book</Button>
                         </form>
                     </div>
-                    
+
                 </div>
             </div>
             <Footer></Footer>
