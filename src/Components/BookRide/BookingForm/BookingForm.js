@@ -35,7 +35,7 @@ const BookingForm = ({ summaryShow, setSummaryShow }) => {
         }
         else {
             const newBookingInfo = { ...bookingInfo }
-            newBookingInfo.data = {name: data.name, phone: data.phone, pickDate: data.pickDate, dropDate: data.dropDate, start: data.start, end: data.end, totalDays};
+            newBookingInfo.data = { name: data.name, phone: data.phone, pickDate: data.pickDate, dropDate: data.dropDate, start: data.start, end: data.end, totalDays };
 
             setBookingInfo(newBookingInfo);
             console.log(newBookingInfo);
@@ -120,14 +120,14 @@ const BookingForm = ({ summaryShow, setSummaryShow }) => {
                 <input className="w-100 my-2 py-1 px-3 form-control" placeholder="End Destination" defaultValue={bookingInfo?.data?.end} {...register("end", { required: true })} onChange={handleOnChange} />
                 {errors.end && <p className="text-warning">This is field is required</p>}
 
-                <label className="my-2 mr-3">
+                {/* <label className="my-2 mr-3">
                     <input
                         className="mr-2"
                         // {...register("oneWay")}
                         name="oneWay"
                         // value={true}
                         checked={!bookingInfo.updown}
-                        onClick={handleCheckBoxClick}
+                        onChange={handleCheckBoxClick}
                         type="checkbox"
                     />
                     One way <span>(শুধু যাওয়া)</span>
@@ -139,26 +139,52 @@ const BookingForm = ({ summaryShow, setSummaryShow }) => {
                         name="updown"
                         // value={true}
                         checked={bookingInfo.updown}
-                        onClick={handleCheckBoxClick}
+                        onChange={handleCheckBoxClick}
                         type="checkbox"
                     />
                     UpDown <span>(যাওয়া-আসা)</span>
-                </label>
+                </label> */}
 
                 {
-                    (bookingInfo.distanceResponse && bookingInfo?.distanceResponse?.status !== "NOT_FOUND") && <div className="my-3 p-2 distanceInformation shadow">
-                        <p className="mb-0">{bookingInfo.updown ? "যাওয়া-আসাঃ" : "শুধু যাওয়াঃ"} </p>
-                        {/* <div className="row mt-0 w-100 mx-auto"> */}
-                        <div className="col-12">
-                            {/* <label className="mb-0">Distance:</label> */}
-                            <p className="w-100 py-1 px-3 oneWayInfomation my-1">Distance: {(bookingInfo.updownDistance && bookingInfo.updown) ? bookingInfo.updownDistance?.distance?.text : bookingInfo?.distanceResponse?.distance?.text}</p>
+                    (bookingInfo.distanceResponse && bookingInfo?.distanceResponse?.status !== "NOT_FOUND") && <>
+                        <label className="my-2 mr-3">
+                            <input
+                                className="mr-2"
+                                // {...register("oneWay")}
+                                name="oneWay"
+                                // value={true}
+                                checked={!bookingInfo.updown}
+                                onChange={handleCheckBoxClick}
+                                type="checkbox"
+                            />
+                            One way <span>(শুধু যাওয়া)</span>
+                        </label>
+                        <label className="my-2">
+                            <input
+                                className="mr-2"
+                                // {...register("updown")}
+                                name="updown"
+                                // value={true}
+                                checked={bookingInfo.updown}
+                                onChange={handleCheckBoxClick}
+                                type="checkbox"
+                            />
+                            UpDown <span>(যাওয়া-আসা)</span>
+                        </label>
+                        <div className="my-3 p-2 distanceInformation shadow">
+                            <p className="mb-0">{bookingInfo.updown ? "যাওয়া-আসাঃ" : "শুধু যাওয়াঃ"} </p>
+                            {/* <div className="row mt-0 w-100 mx-auto"> */}
+                            <div className="col-12">
+                                {/* <label className="mb-0">Distance:</label> */}
+                                <p className="w-100 py-1 px-3 oneWayInfomation my-1">Distance: {(bookingInfo.updownDistance && bookingInfo.updown) ? bookingInfo.updownDistance?.distance?.text : bookingInfo?.distanceResponse?.distance?.text}</p>
+                            </div>
+                            <div className="col-12">
+                                {/* <label className="mb-0">Possible time:</label> */}
+                                <p className="w-100 py-1 px-3 oneWayInfomation my-1">Possible time: {(bookingInfo.updownDistance && bookingInfo.updown) ? bookingInfo.updownDistance?.duration?.text : bookingInfo?.distanceResponse?.duration?.text}</p>
+                            </div>
+                            {/* </div> */}
                         </div>
-                        <div className="col-12">
-                            {/* <label className="mb-0">Possible time:</label> */}
-                            <p className="w-100 py-1 px-3 oneWayInfomation my-1">Possible time: {(bookingInfo.updownDistance && bookingInfo.updown) ? bookingInfo.updownDistance?.duration?.text : bookingInfo?.distanceResponse?.duration?.text}</p>
-                        </div>
-                        {/* </div> */}
-                    </div>
+                    </>
                 }
 
 

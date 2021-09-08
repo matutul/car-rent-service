@@ -30,6 +30,8 @@ const Map = () => {
             const updateDistance = { ...bookingInfo };
             updateDistance.distanceResponse = distanceMatrixResponse;
             updateDistance.car = [];
+            updateDistance.updown = false;
+            delete updateDistance.updateDistance;
             setBookingInfo(updateDistance);
             localStorage.setItem('bookingInfo', JSON.stringify(updateDistance));
         }

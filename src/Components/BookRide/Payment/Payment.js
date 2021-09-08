@@ -19,49 +19,68 @@ const Payment = () => {
     const history = useHistory();
 
     const onSubmit = data => {
-        const dataForPayment = {
-            total_amount: Math.ceil(carBookingInfo.cart.total),
-            currency: 'BDT',
-            tran_id: `REF${carBookingInfo.data.phone}`, // use unique tran_id for each api call
-            success_url: 'https://rocky-waters-70556.herokuapp.com/success',
-            fail_url: 'https://rocky-waters-70556.herokuapp.com/fail',
-            cancel_url: 'https://rocky-waters-70556.herokuapp.com/cancel',
-            ipn_url: 'https://rocky-waters-70556.herokuapp.com/ipn',
-            shipping_method: 'Rent',
-            product_name: 'Car rent',
-            product_category: 'Electronic',
-            product_profile: 'general',
-            cus_name: carBookingInfo.data.name,
-            cus_email: data.email,
-            cus_add1: data.add1,
-            cus_add2: data.add2,
-            cus_city: data.city,
-            cus_state: data.state,
-            cus_postcode: data.postCode,
-            cus_country: 'Bangladesh',
-            cus_phone: carBookingInfo.data.phone,
-            cus_fax: '',
-            ship_name: carBookingInfo.data.name,
-            ship_add1: data.add1,
-            ship_add2: data.add2,
-            ship_city: data.city,
-            ship_state: data.state,
-            ship_postcode: data.postCode,
-            ship_country: 'Bangladesh',
-        };
-        fetch('https://rocky-waters-70556.herokuapp.com/ssl-request', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': 'https://mollarentalservice.com'
-            },
-            body: JSON.stringify(dataForPayment)
-        })
-            .then(res => res.json())
-            .then(result => {
-                console.log(result);
-                alert(result);
-            })
+        // const dataForPayment = {
+        //     total_amount: Math.ceil(carBookingInfo.cart.total),
+        //     currency: 'BDT',
+        //     tran_id: `REF${carBookingInfo.data.phone}`, // use unique tran_id for each api call
+        //     success_url: 'https://rocky-waters-70556.herokuapp.com/success',
+        //     fail_url: 'https://rocky-waters-70556.herokuapp.com/fail',
+        //     cancel_url: 'https://rocky-waters-70556.herokuapp.com/cancel',
+        //     ipn_url: 'https://rocky-waters-70556.herokuapp.com/ipn',
+        //     shipping_method: 'Rent',
+        //     product_name: 'Car rent',
+        //     product_category: 'Electronic',
+        //     product_profile: 'general',
+        //     cus_name: carBookingInfo.data.name,
+        //     cus_email: data.email,
+        //     cus_add1: data.add1,
+        //     cus_add2: data.add2,
+        //     cus_city: data.city,
+        //     cus_state: data.state,
+        //     cus_postcode: data.postCode,
+        //     cus_country: 'Bangladesh',
+        //     cus_phone: carBookingInfo.data.phone,
+        //     cus_fax: '',
+        //     ship_name: carBookingInfo.data.name,
+        //     ship_add1: data.add1,
+        //     ship_add2: data.add2,
+        //     ship_city: data.city,
+        //     ship_state: data.state,
+        //     ship_postcode: data.postCode,
+        //     ship_country: 'Bangladesh',
+        // };
+
+        // fetch('http://localhost:3030/ssl-payment-init', {
+        //     origin: 'https://localhost:3030',
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify(dataForPayment),
+        //     preFlightContinue: true
+        // })
+        //     .then(res => res.json())
+        //     .then(result => {
+        //         console.log(result.url);
+        //         alert(result.url);
+        //         if(result.url){
+        //             fetch(result.url, {
+        //                 mode: 'no-cors',
+        //                 origin: 'http://localhost:3000',
+        //                 method: 'GET',
+        //                 preFlightContinue: true
+        //             })
+        //             .then(res => res.json())
+        //             .then(resultOfPayment => {
+        //                 console.log(resultOfPayment);
+        //                 alert(resultOfPayment);
+        //             })
+        //         }
+        //     })
+
+
+        // Adding booking information in database
+
         if (carBookingInfo.car?.length > 0 && carBookingInfo.cart) {
             fetch('https://rocky-waters-70556.herokuapp.com/addOrder', {
                 method: 'POST',
@@ -91,6 +110,7 @@ const Payment = () => {
     }, [carBookingInfo?.car?.length])
 
     console.log(carBookingInfo);
+
     return (
         <div>
             <NavbarUpper></NavbarUpper>
