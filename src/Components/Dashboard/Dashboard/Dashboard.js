@@ -5,8 +5,8 @@ import './Dashboard.css';
 import { Nav, Spinner, NavDropdown } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBorderAll, faCar, faPlusSquare, faSignOutAlt, faThList, faUserCog, faUserPlus } from '@fortawesome/free-solid-svg-icons';
-import CompletedOrders from '../CompletedOrders/CompletedOrders';
-import ActiveOrders from '../ActiveOrders/ActiveOrders';
+import ActiveOrders from '../RegularOrders/ActiveOrders/ActiveOrders';
+import CompletedOrders from '../RegularOrders/CompletedOrders/CompletedOrders';
 import AddCar from '../AddCar/AddCar';
 import Cars from '../Cars/Cars';
 import { UserContext } from '../../../App';
@@ -19,6 +19,8 @@ import {
 } from "react-router-dom";
 import NavbarUpper from '../../Shared/Navbar/NavbarUpper/NavbarUpper';
 import NavbarMain from '../../Shared/Navbar/NavbarMain/NavbarMain';
+import ConfirmedOrders from '../RegularOrders/ConfirmedOrders/ConfirmedOrders';
+import CancelledOrders from '../RegularOrders/CancelledOrders/CancelledOrders';
 
 
 const Dashboard = () => {
@@ -68,11 +70,11 @@ const Dashboard = () => {
     const handleShowDropdown = dropDownLink => {
         // const isValid = false;
         if (dropDownLink === 'regularOrders' ||
-        dropDownLink === 'monthlyOrders' ||
-        dropDownLink === 'complainBox' ||
-        dropDownLink === 'users' ||
-        dropDownLink === 'cars' ||
-        dropDownLink === 'websiteEdit') {
+            dropDownLink === 'monthlyOrders' ||
+            dropDownLink === 'complainBox' ||
+            dropDownLink === 'users' ||
+            dropDownLink === 'cars' ||
+            dropDownLink === 'websiteEdit') {
             const updateSideBar = { ...showDropdown };
             updateSideBar[dropDownLink] = !showDropdown[dropDownLink];
             setShowDropdown(updateSideBar);
@@ -92,7 +94,7 @@ const Dashboard = () => {
                             <div className="side-bar">
                                 <Nav className="flex-column p-5 w-100">
                                     {/* Regular orders dropdown menus */}
-                                    <Nav.Link className={`w-100 px-3 py-2 mt-2 dropDown-link ${(page === "activeOrder" || page === "confirmedOrder" || page === "completedOrder" || page === "calceledOrder") ? "dropDown-link-active" : ""}`} onClick={() => handleShowDropdown('regularOrders')}><FontAwesomeIcon className="mr-1" icon={faThList} /> Regular orders</Nav.Link>
+                                    <Nav.Link className={`w-100 px-3 py-2 mt-2 dropDown-link ${(page === "activeOrder" || page === "confirmedOrder" || page === "completedOrder" || page === "calcelledOrder") ? "dropDown-link-active" : ""}`} onClick={() => handleShowDropdown('regularOrders')}><FontAwesomeIcon className="mr-1" icon={faThList} /> Regular orders</Nav.Link>
                                     {
                                         (showDropdown.regularOrders) &&
                                         <div className="dropDownContainer w-100">
@@ -102,7 +104,7 @@ const Dashboard = () => {
 
                                             <Nav.Link className={`w-100 px-3 py-2 side-bar-link ${page === "completedOrder" ? "active" : ""}`} onClick={() => displaySection('completedOrder')}><FontAwesomeIcon className="mr-1" icon={faBorderAll} /> Completed orders</Nav.Link>
 
-                                            <Nav.Link className={`w-100 px-3 py-2 side-bar-link ${page === "calceledOrder" ? "active" : ""}`} onClick={() => displaySection('calceledOrder')}><FontAwesomeIcon className="mr-1" icon={faThList} /> Canceled orders</Nav.Link>
+                                            <Nav.Link className={`w-100 px-3 py-2 side-bar-link ${page === "calcelledOrder" ? "active" : ""}`} onClick={() => displaySection('calcelledOrder')}><FontAwesomeIcon className="mr-1" icon={faThList} /> Cancelled orders</Nav.Link>
                                         </div>
                                     }
 
@@ -185,13 +187,19 @@ const Dashboard = () => {
                             </div>
                             <div className="p-5 pageContainer">
                                 {
-                                    (page === "") && <ActiveOrders></ActiveOrders>
+                                    (page === "") && <ActiveOrders />
                                 }
                                 {
-                                    (page === 'completedOrder') && <CompletedOrders></CompletedOrders>
+                                    (page === 'activeOrder') && <ActiveOrders />
                                 }
                                 {
-                                    (page === 'activeOrder') && <ActiveOrders></ActiveOrders>
+                                    (page === 'completedOrder') && <CompletedOrders />
+                                }
+                                {
+                                    (page === 'confirmedOrder') && <ConfirmedOrders />
+                                }
+                                {
+                                    (page === 'calcelledOrder') && <CancelledOrders />
                                 }
                                 {
                                     (page === 'carsList') && <Cars></Cars>
