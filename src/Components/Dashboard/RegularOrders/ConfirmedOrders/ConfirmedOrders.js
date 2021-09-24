@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import OrderTableTamplate from '../OrderTableTamplate/OrderTableTamplate';
-import { Spinner } from 'react-bootstrap';
+import { Button, Spinner } from 'react-bootstrap';
 
 
 const ConfirmedOrders = ({ email, isAdmin }) => {
@@ -10,7 +10,7 @@ const ConfirmedOrders = ({ email, isAdmin }) => {
     const [error, setError] = useState(false)
 
     useEffect(() => {
-        fetch('https://rocky-waters-70556.herokuapp.com/allOrders?orderType=CONFIRMED', {
+        fetch('http://localhost:8000/allOrders?orderType=CONFIRMED', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email })
@@ -81,29 +81,37 @@ const ConfirmedOrders = ({ email, isAdmin }) => {
                 Cell: ({ cell }) => {
                     // console.log("actions of cell", cell)
                     return <>
-                        <select
-                            name='orderStatus'
-                            className="mr-3"
-                            defaultValue={cell.row.original.orderStatus}
-                            onChange={(e) => handleChange(e, cell.row.original._id)}
-                        >
-                            {['PENDING', 'PROCESSING', 'CONFIRMED', 'CANCELLED', 'COMPLETED'].map(orderStatus => (
-                                <option key={orderStatus} value={orderStatus}>
-                                    {orderStatus}
-                                </option>
-                            ))}
-                        </select>
-                        <select
-                            name='paymentStatus'
-                            defaultValue={cell.row.original.paymentStatus}
-                            onChange={(e) => handleChange(e, cell.row.original._id)}
-                        >
-                            {['PARTIAL PAID', 'FULL PAID'].map(paymentStatus => (
-                                <option key={paymentStatus} value={paymentStatus}>
-                                    {paymentStatus}
-                                </option>
-                            ))}
-                        </select>
+                        {
+                            isAdmin ? <>
+                                <select
+                                    name='orderStatus'
+                                    className="mr-3"
+                                    defaultValue={cell.row.original.orderStatus}
+                                    onChange={(e) => handleChange(e, cell.row.original._id)}
+                                >
+                                    {['PENDING', 'PROCESSING', 'CONFIRMED', 'CANCELLED', 'COMPLETED'].map(orderStatus => (
+                                        <option key={orderStatus} value={orderStatus}>
+                                            {orderStatus}
+                                        </option>
+                                    ))}
+                                </select>
+                                <select
+                                    name='paymentStatus'
+                                    defaultValue={cell.row.original.paymentStatus}
+                                    onChange={(e) => handleChange(e, cell.row.original._id)}
+                                >
+                                    {['PARTIAL PAID', 'FULL PAID'].map(paymentStatus => (
+                                        <option key={paymentStatus} value={paymentStatus}>
+                                            {paymentStatus}
+                                        </option>
+                                    ))}
+                                </select>
+                            </>
+                                : <>
+                                    <Button disabled>{cell.row.original.orderStatus}</Button>
+                                    <Button disabled>{cell.row.original.paymentStatus}</Button>
+                                </>
+                        }
                     </>
                 }
             }
