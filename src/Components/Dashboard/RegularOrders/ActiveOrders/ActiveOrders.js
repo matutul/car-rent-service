@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import './ActiveOrders.css';
 import OrderTableTamplate from '../OrderTableTamplate/OrderTableTamplate';
-import { Spinner } from 'react-bootstrap';
+import { Button, Spinner } from 'react-bootstrap';
 
 
-const ActiveOrders = () => {
+const ActiveOrders = ({ email, isAdmin }) => {
 
     const [data, setData] = useState([]);
     const [columns, setColumns] = useState()
     const [statusChange, setStatusChange] = useState(false)
     const [error, setError] = useState(false)
+    console.log(email)
 
     useEffect(() => {
-        fetch('https://rocky-waters-70556.herokuapp.com/allOrders')
+        fetch('https://rocky-waters-70556.herokuapp.com/allOrders', {
+            method: "POST",
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({ email })
+        })
             .then(res => res.json())
             .then(responseData => {
                 if (!responseData.length > 0) {
@@ -23,6 +28,7 @@ const ActiveOrders = () => {
                     setData(responseData);
                 }
             });
+
 
         setColumns([
             {
@@ -68,33 +74,48 @@ const ActiveOrders = () => {
                 sortType: 'basic'
             },
             {
-                Header: 'Actions',
+                Header: (() => {
+                    if (isAdmin) {
+                        return 'Actions'
+                    }
+                    else {
+                        return 'Status'
+                    }
+                })(),
                 Cell: ({ cell }) => {
                     console.log("actions of cell", cell)
                     return <>
-                        <select
-                            name='orderStatus'
-                            className="mr-3"
-                            defaultValue={cell.row.original.orderStatus}
-                            onChange={(e) => handleChange(e, cell.row.original._id)}
-                        >
-                            {['PENDING', 'PROCESSING', 'CONFIRMED', 'CANCELLED', 'COMPLETED'].map(orderStatus => (
-                                <option key={orderStatus} value={orderStatus}>
-                                    {orderStatus}
-                                </option>
-                            ))}
-                        </select>
-                        <select
-                            name='paymentStatus'
-                            defaultValue={cell.row.original.paymentStatus}
-                            onChange={(e) => handleChange(e, cell.row.original._id)}
-                        >
-                            {['PARTIAL PAID', 'FULL PAID'].map(paymentStatus => (
-                                <option key={paymentStatus} value={paymentStatus}>
-                                    {paymentStatus}
-                                </option>
-                            ))}
-                        </select>
+                        {
+                            isAdmin ? <>
+                                <select
+                                    name='orderStatus'
+                                    className="mr-3"
+                                    defaultValue={cell.row.original.orderStatus}
+                                    onChange={(e) => handleChange(e, cell.row.original._id)}
+                                >
+                                    {['PENDING', 'PROCESSING', 'CONFIRMED', 'CANCELLED', 'COMPLETED'].map(orderStatus => (
+                                        <option key={orderStatus} value={orderStatus}>
+                                            {orderStatus}
+                                        </option>
+                                    ))}
+                                </select>
+                                <select
+                                    name='paymentStatus'
+                                    defaultValue={cell.row.original.paymentStatus}
+                                    onChange={(e) => handleChange(e, cell.row.original._id)}
+                                >
+                                    {['PARTIAL PAID', 'FULL PAID'].map(paymentStatus => (
+                                        <option key={paymentStatus} value={paymentStatus}>
+                                            {paymentStatus}
+                                        </option>
+                                    ))}
+                                </select>
+                            </>
+                                : <>
+                                    <Button disabled>{cell.row.original.orderStatus}</Button>
+                                    <Button disabled>{cell.row.original.paymentStatus}</Button>
+                                </>
+                        }
                     </>
                 }
             }

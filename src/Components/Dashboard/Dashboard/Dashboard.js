@@ -92,7 +92,7 @@ const Dashboard = () => {
                     !showLoading ? (
                         <div className="row w-100 dashboard">
                             <div className="side-bar">
-                                <Nav className="flex-column p-5 w-100">
+ <Nav className="flex-column p-5 w-100">
                                     {/* Regular orders dropdown menus */}
                                     <Nav.Link className={`w-100 px-3 py-2 mt-2 dropDown-link ${(page === "activeOrder" || page === "confirmedOrder" || page === "completedOrder" || page === "calcelledOrder") ? "dropDown-link-active" : ""}`} onClick={() => handleShowDropdown('regularOrders')}><FontAwesomeIcon className="mr-1" icon={faThList} /> Regular orders</Nav.Link>
                                     {
@@ -190,16 +190,16 @@ const Dashboard = () => {
                                     (page === "") && <ActiveOrders />
                                 }
                                 {
-                                    (page === 'activeOrder') && <ActiveOrders />
+                                    (page === 'activeOrder') && <ActiveOrders email={loggedInUser.email} isAdmin={isAdmin} />
                                 }
                                 {
-                                    (page === 'completedOrder') && <CompletedOrders />
+                                    (page === 'completedOrder') && <CompletedOrders email={loggedInUser.email} isAdmin={isAdmin} />
                                 }
                                 {
-                                    (page === 'confirmedOrder') && <ConfirmedOrders />
+                                    (page === 'confirmedOrder') && <ConfirmedOrders email={loggedInUser.email} isAdmin={isAdmin} />
                                 }
                                 {
-                                    (page === 'calcelledOrder') && <CancelledOrders />
+                                    (page === 'calcelledOrder') && <CancelledOrders email={loggedInUser.email} isAdmin={isAdmin} />
                                 }
                                 {
                                     (page === 'carsList') && <Cars></Cars>

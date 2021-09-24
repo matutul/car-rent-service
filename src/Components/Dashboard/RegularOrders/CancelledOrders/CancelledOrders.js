@@ -3,14 +3,18 @@ import OrderTableTamplate from '../OrderTableTamplate/OrderTableTamplate';
 import { Spinner } from 'react-bootstrap';
 
 
-const CancelledOrders = () => {
+const CancelledOrders = ({ email, isAdmin }) => {
     const [data, setData] = useState([]);
     const [columns, setColumns] = useState()
     const [statusChange, setStatusChange] = useState(false)
     const [error, setError] = useState(false)
 
     useEffect(() => {
-        fetch('https://rocky-waters-70556.herokuapp.com/allOrders?orderType=CANCELLED')
+        fetch('https://rocky-waters-70556.herokuapp.com/allOrders?orderType=CANCELLED', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json'},
+            body: JSON.stringify({ email })
+        })
             .then(res => res.json())
             .then(responseData => {
                 if (!responseData.length > 0) {
@@ -66,7 +70,14 @@ const CancelledOrders = () => {
                 sortType: 'basic'
             },
             {
-                Header: 'Actions',
+                Header: (() => {
+                    if (isAdmin) {
+                        return 'Actions'
+                    }
+                    else {
+                        return 'Status'
+                    }
+                })(),
                 Cell: ({ cell }) => {
                     // console.log("actions of cell", cell)
                     return <>
