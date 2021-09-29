@@ -7,23 +7,21 @@ const CompletedOrders = ({ email, isAdmin }) => {
     const [data, setData] = useState([]);
     const [columns, setColumns] = useState()
     const [statusChange, setStatusChange] = useState(false)
-    const [error, setError] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
-        fetch('http://localhost:8000/allOrders?orderType=COMPLETED', {
+        fetch('https://rocky-waters-70556.herokuapp.com/allOrders?orderType=COMPLETED', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email })
         })
             .then(res => res.json())
             .then(responseData => {
-                if (!responseData.length > 0) {
-                    setError({ message: "Not found" })
-                }
+                console.log(responseData)
                 if (responseData.length > 0) {
-                    setError(false);
                     setData(responseData);
                 }
+                setIsLoading(false)
             });
 
         setColumns([
@@ -156,11 +154,17 @@ const CompletedOrders = ({ email, isAdmin }) => {
         <div>
             <h3>Completed Orders:</h3>
             {
-                (data.length > 0) ? <OrderTableTamplate tdRows={data} thRow={columns} handleChange={handleChange} /> : error ? <div className="w-100 py-5 d-flex justify-content-center align-items-center">
-                    <p>{error.message}</p>
-                </div> : <div className="w-100 py-5 d-flex justify-content-center align-items-center">
-                    <Spinner animation="border" variant="secondary" />
-                </div>
+                isLoading ?
+                    <div className="w-100 py-5 d-flex justify-content-center align-items-center">
+                        <Spinner animation="border" variant="secondary" />
+                    </div>
+                    :
+                    data.length ?
+                        <OrderTableTamplate tdRows={data} thRow={columns} handleChange={handleChange} />
+                        :
+                        <div className="w-100 py-5 d-flex justify-content-center align-items-center">
+                            <p>Not Data Found</p>
+                        </div>
             }
         </div>
     );

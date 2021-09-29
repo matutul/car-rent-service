@@ -10,13 +10,14 @@ const ConfirmedOrders = ({ email, isAdmin }) => {
     const [error, setError] = useState(false)
 
     useEffect(() => {
-        fetch('http://localhost:8000/allOrders?orderType=CONFIRMED', {
+        fetch('https://rocky-waters-70556.herokuapp.com/allOrders?orderType=CONFIRMED', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email })
         })
             .then(res => res.json())
             .then(responseData => {
+                console.log(responseData)
                 if (!responseData.length > 0) {
                     setError({ message: "Not found" })
                 }

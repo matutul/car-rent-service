@@ -20,6 +20,8 @@ export const bookingContext = createContext();
 const BookRide = () => {
     const [cars, setCars] = useState([]);
     const [bookingInfo, setBookingInfo] = useState({
+        rentType: 'daily',
+        car: [],
         data: {
             name: '',
             phone: '',

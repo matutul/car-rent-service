@@ -1,0 +1,23 @@
+input[type="radio"] {
+    display: none;
+}
+.star{
+    transition: .3s;
+}
+.starRatingSection{
+    border-radius: 15px;
+}
+.reviewDisplay{
+    border-radius: 15px;
+}
+.reviewComment{
+    background-color: rgb(61, 175, 61);
+    border-left: 5px solid rgb(139, 226, 139);
+    border-top-right-radius: 35px;
+    border-bottom-right-radius: 35px;
+    border-bottom-left-radius: 30px;
+}
+.comment{
+    color: white;
+    font-size: 1.2rem;
+}

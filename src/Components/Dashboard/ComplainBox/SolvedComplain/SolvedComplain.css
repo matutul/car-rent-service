@@ -1,0 +1,7 @@
+.complainHeader{
+    position: relative;
+}
+.makeComplainButton{
+    position: absolute;
+    right: 20px;
+}

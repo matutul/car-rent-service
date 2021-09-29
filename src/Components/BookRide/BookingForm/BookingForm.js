@@ -24,10 +24,13 @@ const BookingForm = ({ summaryShow, setSummaryShow }) => {
         if (data.car?.length > 0) {
             data.car = [];
         }
-        const startDate = new Date(data.pickDate);
-        const endDate = new Date(data.dropDate);
-        const totalDuration = endDate.getTime() - startDate.getTime();
-        const totalDays = (totalDuration / (1000 * 3600 * 24)) + 1;
+        let totalDays = 0;
+        if (bookingInfo.rentType !== 'monthly') {
+            const startDate = new Date(data.pickDate);
+            const endDate = new Date(data.dropDate);
+            const totalDuration = endDate.getTime() - startDate.getTime();
+            totalDays = (totalDuration / (1000 * 3600 * 24)) + 1;
+        }
         console.log(totalDays);
 
         if (bookingInfo.distanceResponse?.status === "NOT_FOUND") {
@@ -35,6 +38,9 @@ const BookingForm = ({ summaryShow, setSummaryShow }) => {
         }
         else {
             const newBookingInfo = { ...bookingInfo }
+            if (bookingInfo.rentType === 'monthly') {
+                newBookingInfo.data = { name: data.name, phone: data.phone, pickDate: data.pickDate, start: data.start, end: data.end };
+            }
             newBookingInfo.data = { name: data.name, phone: data.phone, pickDate: data.pickDate, dropDate: data.dropDate, start: data.start, end: data.end, totalDays };
 
             setBookingInfo(newBookingInfo);
@@ -120,30 +126,6 @@ const BookingForm = ({ summaryShow, setSummaryShow }) => {
                 <input className="w-100 my-2 py-1 px-3 form-control" placeholder="End Destination" defaultValue={bookingInfo?.data?.end} {...register("end", { required: true })} onChange={handleOnChange} />
                 {errors.end && <p className="text-warning">This is field is required</p>}
 
-                {/* <label className="my-2 mr-3">
-                    <input
-                        className="mr-2"
-                        // {...register("oneWay")}
-                        name="oneWay"
-                        // value={true}
-                        checked={!bookingInfo.updown}
-                        onChange={handleCheckBoxClick}
-                        type="checkbox"
-                    />
-                    One way <span>(শুধু যাওয়া)</span>
-                </label>
-                <label className="my-2">
-                    <input
-                        className="mr-2"
-                        // {...register("updown")}
-                        name="updown"
-                        // value={true}
-                        checked={bookingInfo.updown}
-                        onChange={handleCheckBoxClick}
-                        type="checkbox"
-                    />
-                    UpDown <span>(যাওয়া-আসা)</span>
-                </label> */}
 
                 {
                     (bookingInfo.distanceResponse && bookingInfo?.distanceResponse?.status !== "NOT_FOUND") && <>
@@ -194,11 +176,14 @@ const BookingForm = ({ summaryShow, setSummaryShow }) => {
                         <input className="w-100 my-2 py-1 px-3 form-control" defaultValue={bookingInfo?.data?.pickDate} type="date" placeholder="Pick up date" {...register("pickDate", { required: true })} />
                         {errors.pickDate && <p className="text-warning">This field is required</p>}
                     </div>
-                    <div className="col-12">
-                        <label className="mb-0" htmlFor="dropDate">Drop off date:</label>
-                        <input className="w-100 my-2 py-1 px-3 form-control" defaultValue={bookingInfo?.data?.dropDate} type="date" placeholder="Drop off date" {...register("dropDate", { required: true })} />
-                        {errors.dropDate && <p className="text-warning">This field is required</p>}
-                    </div>
+                    {
+                        bookingInfo.rentType !== 'monthly' &&
+                        <div className="col-12">
+                            <label className="mb-0" htmlFor="dropDate">Drop off date:</label>
+                            <input className="w-100 my-2 py-1 px-3 form-control" defaultValue={bookingInfo?.data?.dropDate} type="date" placeholder="Drop off date" {...register("dropDate", { required: true })} />
+                            {errors.dropDate && <p className="text-warning">This field is required</p>}
+                        </div>
+                    }
                 </div>
                 <input className="w-100 my-2 btn btn-warning" type="submit" value="Next" />
             </form>

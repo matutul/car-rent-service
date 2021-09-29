@@ -13,7 +13,7 @@ const ActiveOrders = ({ email, isAdmin }) => {
     console.log(email)
 
     useEffect(() => {
-        fetch('http://localhost:8000/allOrders', {
+        fetch('https://rocky-waters-70556.herokuapp.com/allOrders', {
             method: "POST",
             headers: { 'content-type': 'application/json' },
             body: JSON.stringify({ email })

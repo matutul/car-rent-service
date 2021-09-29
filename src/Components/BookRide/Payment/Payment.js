@@ -23,10 +23,10 @@ const Payment = () => {
         //     total_amount: Math.ceil(carBookingInfo.cart.total),
         //     currency: 'BDT',
         //     tran_id: `REF${carBookingInfo.data.phone}`, // use unique tran_id for each api call
-        //     success_url: 'http://localhost:8000/success',
-        //     fail_url: 'http://localhost:8000/fail',
-        //     cancel_url: 'http://localhost:8000/cancel',
-        //     ipn_url: 'http://localhost:8000/ipn',
+        //     success_url: 'https://rocky-waters-70556.herokuapp.com/success',
+        //     fail_url: 'https://rocky-waters-70556.herokuapp.com/fail',
+        //     cancel_url: 'https://rocky-waters-70556.herokuapp.com/cancel',
+        //     ipn_url: 'https://rocky-waters-70556.herokuapp.com/ipn',
         //     shipping_method: 'Rent',
         //     product_name: 'Car rent',
         //     product_category: 'Electronic',
@@ -50,7 +50,7 @@ const Payment = () => {
         //     ship_country: 'Bangladesh',
         // };
 
-        // fetch('http://localhost:8000/ssl-request', {
+        // fetch('https://rocky-waters-70556.herokuapp.com/ssl-request', {
         //     method: 'POST',
         //     headers: {
         //         'Content-Type': 'application/json',

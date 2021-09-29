@@ -1,0 +1,16 @@
+.searchSection{
+    width: 100%;
+}
+.searchButton{
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+}
+@media screen and (min-width: 668px){
+    .searchSection{
+        width: 200px;
+        transition: .3s;
+    }
+    .searchIput:focus .searchSection{
+        width: 400px !important;
+    }
+}

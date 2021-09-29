@@ -1,12 +1,14 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { Button, Table } from 'react-bootstrap';
-import { useTable, useSortBy, usePagination, } from 'react-table';
+import React, { useMemo } from 'react';
+import { useTable, useSortBy, usePagination, useGlobalFilter, useAsyncDebounce } from 'react-table';
+import { Button, InputGroup, Table } from 'react-bootstrap';
+import './OrderTableTamplate.css'
 
 const OrderTableTamplate = ({ tdRows, thRow, handleChange }) => {
 
     // console.log(statusChange)
     const data = useMemo(() => tdRows, [handleChange])
     const columns = useMemo(() => thRow, [handleChange])
+    // console.log('This is data for table', data);
     const {
         getTableProps,
         getTableBodyProps,
@@ -14,7 +16,7 @@ const OrderTableTamplate = ({ tdRows, thRow, handleChange }) => {
         prepareRow,
         pageOptions,
         page,
-        state: { pageIndex, pageSize },
+        state: { pageIndex, pageSize, globalFilter },
         gotoPage,
         pageCount,
         previousPage,
@@ -22,13 +24,27 @@ const OrderTableTamplate = ({ tdRows, thRow, handleChange }) => {
         setPageSize,
         canPreviousPage,
         canNextPage,
-    } = useTable({ columns, data }, useSortBy, usePagination)
+
+        setGlobalFilter
+    } = useTable({ columns, data }, useGlobalFilter, useSortBy, usePagination)
+
+
+    const handleChangeSearchInput = useAsyncDebounce((e) => {
+        // console.log(e.target.value)
+        setGlobalFilter(e.target.value);
+    }, 1000)
 
     return (
         <div>
+            <InputGroup className="mb-3 float-right searchSection">
+                <input type="text" className="searchInput form-control" defaultValue={globalFilter || ""} placeholder={`Search...`} onChange={handleChangeSearchInput} />
+                <Button variant="outline-secondary" className="searchButton" onClick={handleChangeSearchInput}>
+                    Search
+                </Button>
+            </InputGroup>
             {
                 (data.length > 0) && <>
-                    <Table {...getTableProps()} striped bordered hover className="mt-3 shadow">
+                    <Table {...getTableProps()} striped bordered hover className="mt-3 shadow" responsive>
                         <thead>
                             {headerGroups.map(headerGroup => (
                                 <tr {...headerGroup.getHeaderGroupProps()}>
@@ -99,7 +115,7 @@ const OrderTableTamplate = ({ tdRows, thRow, handleChange }) => {
                                 setPageSize(Number(e.target.value))
                             }}
                         >
-                            {[10, 20, 30, 40, 50].map(pageSize => (
+                            {[5, 10, 20, 30, 40, 50].map(pageSize => (
                                 <option key={pageSize} value={pageSize}>
                                     Show {pageSize}
                                 </option>
