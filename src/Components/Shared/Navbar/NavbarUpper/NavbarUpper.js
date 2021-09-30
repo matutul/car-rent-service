@@ -13,10 +13,10 @@ const NavbarUpper = () => {
                     <Navbar.Brand><Link to="/home"></Link></Navbar.Brand>
                     <ul className="navbar-nav d-flex flex-wrap">
                         <li className="nav-item me-5 text-right">
-                            <a className="nav-link-secondary" href="mailto: ashrafujjamantutul@gmail.com"> ashrafujjamantutul@gmail.com <FontAwesomeIcon icon={faEnvelope} /></a>
+                            <a className="nav-link-secondary" href="mailto: molla.rental.service@gmail.com"> molla.rental.service@gmail.com <FontAwesomeIcon icon={faEnvelope} /></a>
                         </li>
                         <li className="nav-item text-right">
-                            <a className="nav-link-secondary" href="tel:01941071009"> 01941071009 <FontAwesomeIcon icon={faPhoneAlt} /></a>
+                            <a className="nav-link-secondary" href="tel:01914411291"> 01914411291 <FontAwesomeIcon icon={faPhoneAlt} /></a>
                         </li>
                     </ul>
                 </div>

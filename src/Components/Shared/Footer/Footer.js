@@ -16,7 +16,7 @@ const Footer = () => {
                     <div className="row">
                         <div className="col-lg-4 col-sm-6 text-secondary">
                             <Link className="text-white default-link" to='/home'>Car Rent Service</Link>
-                            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Necessitatibus asperiores praesentium architecto at accusamus molestias cupiditate aspernatur! Quis dicta illum voluptatem quam excepturi nemo, non minima, neque blanditiis eligendi officiis.</p>
+                            <p>Premium Car Rental Service Provider in Bangladesh. 100% Safe, Reliable & Professional. We provide all types of rented Cars, Micros, and Ambulances as per your demand for comfortable travel at a low cost.</p>
                         </div>
                         <div className="col-lg-4 col-sm-6">
                             <h3 className="text-white">Services: </h3>
@@ -39,9 +39,10 @@ const Footer = () => {
                             <h3 className="text-white">Get In Touch: </h3>
                             <div className="border"></div>
                             <Nav defaultActiveKey="/home" className="">
-                                <Nav.Link className="default-link"><FontAwesomeIcon icon={faMapMarkerAlt} /> Dhamrai, Dhaka - 1350.</Nav.Link>
-                                <Nav.Link className="default-link" href="tel:01941071009"><FontAwesomeIcon icon={faMobileAlt} /> 01941071009</Nav.Link>
-                                <Nav.Link className="default-link" href="mailto: ashrafujjamantutul@gmail.com"><FontAwesomeIcon icon={faEnvelope} />  ashrafujjamantutul@gmail.com </Nav.Link>
+                                <Nav.Link className="default-link"><FontAwesomeIcon icon={faMapMarkerAlt} /> 251/1, South Pirerbagh, Amtola, Mirpur, Dhaka- 1216
+</Nav.Link>
+                                <Nav.Link className="default-link" href="tel:01914411291"><FontAwesomeIcon icon={faMobileAlt} /> 01914411291</Nav.Link>
+                                <Nav.Link className="default-link" href="mailto: molla.rental.service@gmail.com"><FontAwesomeIcon icon={faEnvelope} />  molla.rental.service@gmail.com </Nav.Link>
                             </Nav>
                         </div>
                     </div>
@@ -54,14 +55,14 @@ const Footer = () => {
                             <p className="text-secondary">Copyright &copy; matutul - All rights reserved</p>
                         </div>
                         <div className="col d-flex justify-content-end">
-                            <a href="https://www.facebook.com/ashrafujjaman.tutul" target="_blank" rel="noreferrer">
+                            <a href="www.facebook.com/molla.rental.service" target="_blank" rel="noreferrer">
                                 <img className="social-icon" style={{ width: "50px" }} src={facebook} alt="" />
                             </a>
-                            <a href="">
+                            {/* <a href="">
                                 <img className="mx-3 social-icon" style={{ width: "50px" }} src={twitter} alt="" />
-                            </a>
-                            <a href="">
-                                <img className="social-icon" style={{ width: "50px" }} src={web} alt="" />
+                            </a> */}
+                            <a href="https://mollarentalservice.com/">
+                                <img className="social-icon ml-3" style={{ width: "50px" }} src={web} alt="" />
                             </a>
                         </div>
                     </div>
