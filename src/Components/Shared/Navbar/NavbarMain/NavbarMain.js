@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { Navbar, Nav, NavDropdown, Button } from 'react-bootstrap';
 import './NavbarMain.css';
 import { useContext } from 'react';
@@ -24,7 +24,7 @@ const NavbarMain = () => {
         <div className="main-nav">
             <Navbar className="nav-bar" collapseOnSelect expand="lg" variant="dark">
                 <div className="container">
-                    <Navbar.Brand href="#home">MOLLA RENTAL SERVICE</Navbar.Brand>
+                    <Navbar.Brand className="brandName" onClick={() => routeToPath('/home')}>MOLLA RENTAL SERVICE</Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="mr-auto">

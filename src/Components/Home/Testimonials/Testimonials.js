@@ -23,9 +23,11 @@ const Testimonials = () => {
     var settings = {
         dots: false,
         infinite: true,
-        speed: 500,
         slidesToShow: 1,
-        slidesToScroll: 1
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 6000,
+        speed: 1000
     };
     return (
         <div className="testimonials py-5">

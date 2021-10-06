@@ -1,6 +1,38 @@
 .upper-nav{
-    height: 100px;
+    min-height: 100px;
     background-color: rgb(0, 83, 218) !important;
+}
+/* .brand{
+    max-height: 100px;
+    width: auto;
+} */
+.logo{
+    max-height: 90px;
+    width: auto;
+    /* border: 3px solid white; */
+}
+.upperNavRaw{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+.nav-item{
+    text-align: center;
+}
+@media screen and (max-width: 768px){
+    .logo{
+        height: 40px;
+    }
+}
+@media screen and (min-width: 768px){
+    .upperNavRaw{
+        flex-direction: row;
+        /* border: 3px solid white; */
+    }
+    .nav-item{
+        text-align: right;
+    }
 }
 .nav-link{
     font-size: 1.2rem;
@@ -8,7 +40,7 @@
     color: white;
 }
 .nav-link-secondary{
-    font-size: 1rem;
+    font-size: 1.2rem;
     color: rgb(226, 226, 226);
 }
 .nav-link-secondary:hover{
