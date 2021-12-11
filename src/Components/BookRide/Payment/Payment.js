@@ -23,10 +23,10 @@ const Payment = () => {
         //     total_amount: Math.ceil(carBookingInfo.cart.total),
         //     currency: 'BDT',
         //     tran_id: `REF${carBookingInfo.data.phone}`, // use unique tran_id for each api call
-        //     success_url: 'https://rocky-waters-70556.herokuapp.com/success',
-        //     fail_url: 'https://rocky-waters-70556.herokuapp.com/fail',
-        //     cancel_url: 'https://rocky-waters-70556.herokuapp.com/cancel',
-        //     ipn_url: 'https://rocky-waters-70556.herokuapp.com/ipn',
+        //     success_url: 'http://localhost:8000/success',
+        //     fail_url: 'http://localhost:8000/fail',
+        //     cancel_url: 'http://localhost:8000/cancel',
+        //     ipn_url: 'http://localhost:8000/ipn',
         //     shipping_method: 'Rent',
         //     product_name: 'Car rent',
         //     product_category: 'Electronic',
@@ -50,11 +50,10 @@ const Payment = () => {
         //     ship_country: 'Bangladesh',
         // };
 
-        // fetch('https://rocky-waters-70556.herokuapp.com/ssl-request', {
+        // fetch('http://localhost:8000/ssl-request', {
         //     method: 'POST',
         //     headers: {
-        //         'Content-Type': 'application/json',
-        //         'Access-Control-Allow-Origin': '*'
+        //         'Content-Type': 'application/json'
         //     },
         //     body: JSON.stringify(dataForPayment)
         // })
@@ -64,6 +63,7 @@ const Payment = () => {
         //         alert(result);
         //     })
 
+// 'Access-Control-Allow-Origin': '*'
 
         // Adding booking information in database
 

@@ -8,6 +8,10 @@
     transform: translateY(-5px);
     box-shadow: 1px 2px 10px rgb(82, 82, 82);
 }
-.service-link{
-    
+.footer-link{
+    font-size: 1.1rem;
+    transition: .3s;
+}
+.footer-link:hover{
+    color: #FDB531;
 }

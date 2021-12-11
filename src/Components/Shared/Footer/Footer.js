@@ -23,14 +23,14 @@ const Footer = () => {
                             <div className="border"></div>
                             <div className="service-link d-flex">
                                 <Nav defaultActiveKey="/home" className="flex-column w-50">
-                                    <Nav.Link className="default-link">Active</Nav.Link>
-                                    <Nav.Link className="default-link">Link</Nav.Link>
-                                    <Nav.Link className="default-link">Link</Nav.Link>
+                                    <Nav.Link className="footer-link">Active</Nav.Link>
+                                    <Nav.Link className="footer-link">Link</Nav.Link>
+                                    <Nav.Link className="footer-link">Link</Nav.Link>
                                 </Nav>
                                 <Nav defaultActiveKey="/home" className="flex-column w-50">
-                                    <Nav.Link className="default-link">Active</Nav.Link>
-                                    <Nav.Link className="default-link">Link</Nav.Link>
-                                    <Nav.Link className="default-link">Link</Nav.Link>
+                                    <Nav.Link className="footer-link">Active</Nav.Link>
+                                    <Nav.Link className="footer-link">Link</Nav.Link>
+                                    <Nav.Link className="footer-link">Link</Nav.Link>
                                 </Nav>
                             </div>
 
@@ -39,10 +39,9 @@ const Footer = () => {
                             <h3 className="text-white">Get In Touch: </h3>
                             <div className="border"></div>
                             <Nav defaultActiveKey="/home" className="">
-                                <Nav.Link className="default-link"><FontAwesomeIcon icon={faMapMarkerAlt} /> 251/1, South Pirerbagh, Amtola, Mirpur, Dhaka- 1216
-</Nav.Link>
-                                <Nav.Link className="default-link" href="tel:01914411291"><FontAwesomeIcon icon={faMobileAlt} /> 01914411291</Nav.Link>
-                                <Nav.Link className="default-link" href="mailto: molla.rental.service@gmail.com"><FontAwesomeIcon icon={faEnvelope} />  molla.rental.service@gmail.com </Nav.Link>
+                                <Nav.Link className="footer-link"><FontAwesomeIcon icon={faMapMarkerAlt} />{" "}Bagnagar, Dhamrai, Dhaka - 1350.</Nav.Link>
+                                <Nav.Link className="footer-link" href="tel:01941071009"><FontAwesomeIcon icon={faMobileAlt} />{" "} 01941071009</Nav.Link>
+                                <Nav.Link className="footer-link" href="mailto: ashrafujjamantutul@gmail.com"><FontAwesomeIcon icon={faEnvelope} /> {" "} ashrafujjamantutul@gmail.com </Nav.Link>
                             </Nav>
                         </div>
                     </div>
@@ -55,7 +54,7 @@ const Footer = () => {
                             <p className="text-secondary">Copyright &copy; matutul - All rights reserved</p>
                         </div>
                         <div className="col d-flex justify-content-end">
-                            <a href="www.facebook.com/molla.rental.service" target="_blank" rel="noreferrer">
+                            <a href="#" target="_blank" rel="noreferrer">
                                 <img className="social-icon" style={{ width: "50px" }} src={facebook} alt="" />
                             </a>
                             {/* <a href="">
