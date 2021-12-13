@@ -3,7 +3,7 @@ import './NavbarUpper.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faPhoneAlt } from '@fortawesome/free-solid-svg-icons';
 import { Navbar } from 'react-bootstrap';
-import logo from '../../../../image/Molla-Rental-Service.png';
+import logo from '../../../../image/carRentalProjectLogo.png';
 
 const NavbarUpper = () => {
     return (
