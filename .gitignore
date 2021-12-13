@@ -5,6 +5,7 @@
 /.pnp
 .pnp.js
 
+/src/Components/BookRide/Map/api_key.js
 # testing
 /coverage
 

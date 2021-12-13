@@ -3,7 +3,7 @@ import { GoogleMap, LoadScript, DirectionsService, DirectionsRenderer, DistanceM
 import { useState } from 'react';
 import { useContext } from 'react';
 import { bookingContext } from '../BookRide/BookRide';
-
+import { apiKey } from './api_key';
 
 const containerStyle = {
     width: '100%',
@@ -44,7 +44,7 @@ const Map = () => {
 
     return (
         <LoadScript
-            googleMapsApiKey="AIzaSyB8Q5le6qxtQKy1os8hzDJ4_BLSXCJR0VI"
+            googleMapsApiKey= {apiKey.apiKey}
         >
             <GoogleMap
                 mapContainerStyle={containerStyle}
